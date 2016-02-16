@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{B49B9D8F-844C-8582-717F-F3AD705677A1}") = "cash-walk-source-tree", "Assembly-CSharp.csproj", "{5E9BADEF-82BE-9DF8-0E7D-4546EEAD2B55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E9BADEF-82BE-9DF8-0E7D-4546EEAD2B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E9BADEF-82BE-9DF8-0E7D-4546EEAD2B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E9BADEF-82BE-9DF8-0E7D-4546EEAD2B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E9BADEF-82BE-9DF8-0E7D-4546EEAD2B55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
