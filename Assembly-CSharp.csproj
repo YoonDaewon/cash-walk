@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Script\EscapeKey.cs" />
      <Compile Include="Assets\Script\ExitButton.cs" />
+     <Compile Include="Assets\Script\Maptest.cs" />
      <Compile Include="Assets\Script\PlayButton.cs" />
      <Compile Include="Assets\Script\StartNextMain.cs" />
  <Reference Include="UnityEngine.UI">
