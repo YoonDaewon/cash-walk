@@ -1,0 +1,14 @@
+VIew attribute 설정
+
+
+<xml>
+android:soundEffectsEnabled="true"
+
+<java>
+view.setSoundEffectsEnabled (true );
+
+
+
+소리 내기
+
+view.playSoundEffect( SoundEffectConstants.CLICK );
