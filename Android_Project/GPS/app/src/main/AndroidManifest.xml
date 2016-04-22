@@ -36,7 +36,7 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="8115000"/>
+            android:value="@integer/google_play_services_version"/>
 
         <activity
             android:name=".MainActivity"
@@ -50,3 +50,4 @@
     </application>
 
 </manifest>
+

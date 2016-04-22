@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private void startLocationService(){
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        GPSListener gpsListener = new GPSListener;
+        GPSListener gpsListener = new GPSListener();
         long minTime = 10000;
         float minDistance = 0;
 
