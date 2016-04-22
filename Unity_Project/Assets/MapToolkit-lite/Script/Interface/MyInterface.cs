@@ -30,6 +30,7 @@ public class MyInterface : MonoBehaviour
 	float btn_width;
 	float btn_height;
 	float Interval;
+    //float Interval2;
 	private int selected = -1;
 	Manager mg;
 	Vector2 scrollPosition;
