@@ -52,14 +52,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(mCompassEnabled) {
-            mSensorManager.registerListener(mListener, mSensorManager, getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
+            mSensorManager.registerListener(mListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
         }
     }
 
     public void onPause(){
         super.onPause();
 
-        map.setMyLocationEnabled(false);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(false);
+        } else {
+            // Show rationale and request permission.
+        }
         if(mCompassEnabled){
             mSensorManager.unregisterListener(mListener);
         }
@@ -72,15 +77,20 @@ public class MainActivity extends AppCompatActivity {
         long minTime = 10000;
         float minDistance = 0;
 
-        manager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                minTime,
-                minDistance,
-                gpsListener);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            manager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    minTime,
+                    minDistance,
+                    gpsListener);
+        } else {
+            // Show rationale and request permission.
+        }
 
         Toast.makeText(getApplicationContext(),"위치 확인 시작함. 로그를 확인",Toast.LENGTH_SHORT).show();
-
     }
+
 
     private class GPSListener implements LocationListener{
 
