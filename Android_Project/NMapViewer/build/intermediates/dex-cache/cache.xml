@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\build\intermediates\exploded-aar\nmaps\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="16881a2d43d0af0f6bddbab0e10731a650bd2fa0">
+        <dex dex="C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\build\intermediates\pre-dexed\debug\classes-cf3a584864fd261b8438b84e2f7cbaf872330c40.jar" />
+    </item>
+
+</items>
