@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="nmaps-">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/nmaps/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/nmaps/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

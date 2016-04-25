@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NMapView"><attr format="integer" name="blankTileImageId"/></declare-styleable>
+    <declare-styleable name="NNMapView_Layout"/>
+    <!-- From: file:/C:/test/cashwalk/Android_Project/NMAPTEST/NMapViewer(android)_v2.1.1_open%20(1)/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <drawable name="black_color">#ff000000</drawable>
+    <drawable name="default_list_color">#ffffffff</drawable>
+    <drawable name="selected_list_color">#ff32A800</drawable>
+    <!-- From: file:/C:/test/cashwalk/Android_Project/NMAPTEST/NMapViewer(android)_v2.1.1_open%20(1)/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">NMapViewer</string>
+    <string name="hello">Hello World, NMapViewer!</string>
+    <string name="str_done">완료</string>
+    <!-- From: file:/C:/test/cashwalk/Android_Project/NMAPTEST/NMapViewer(android)_v2.1.1_open%20(1)/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="Theme.NoShadow" parent="android:style/Theme.Light.NoTitleBar">
+		<item name="android:windowContentOverlay">@android:color/transparent</item> 
+    </style>
+</resources>
