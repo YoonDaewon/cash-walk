@@ -3,9 +3,8 @@ package com.nhn.android.mapviewer;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.TestMap.R;
 import com.nhn.android.maps.NMapView;
-
-import TestMap.R;
 
 public class FragmentActivity extends Activity {
 	

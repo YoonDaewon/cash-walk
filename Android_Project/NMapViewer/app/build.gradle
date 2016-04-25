@@ -5,8 +5,8 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "TestMap"
-        minSdkVersion 9
+        applicationId "com.TestMap"
+        minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"

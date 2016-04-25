@@ -20,11 +20,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.TestMap.R;
 import com.nhn.android.maps.NMapOverlayItem;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
-
-import TestMap.R;
 
 /**
  * Wrapper class to provider resources on map view.

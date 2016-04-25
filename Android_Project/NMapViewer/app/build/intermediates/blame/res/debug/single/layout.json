@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\build\\intermediates\\res\\merged\\debug\\layout\\map_container.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\src\\main\\res\\layout\\map_container.xml"
+    },
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment1.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\src\\main\\res\\layout\\fragment1.xml"
+    },
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\build\\intermediates\\res\\merged\\debug\\layout\\callout_overlay_view.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\src\\main\\res\\layout\\callout_overlay_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\build\\intermediates\\res\\merged\\debug\\layout\\framents.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\src\\main\\res\\layout\\framents.xml"
+    },
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment2.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\src\\main\\res\\layout\\fragment2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\NMapViewer\\app\\src\\main\\res\\layout\\main.xml"
+    }
+]

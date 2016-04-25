@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.TestMap.R;
 import com.nhn.android.maps.NMapOverlay;
 import com.nhn.android.maps.NMapOverlayItem;
 import com.nhn.android.maps.overlay.NMapPOIitem;
-
-import TestMap.R;
 
 public class NMapCalloutCustomOverlayView extends NMapCalloutOverlayView {
 

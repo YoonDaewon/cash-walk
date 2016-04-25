@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package TestMap;
+package com.TestMap;
 
 public final class R {
     public static final class attr {
@@ -88,7 +88,7 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #NMapView_blankTileImageId TestMap:blankTileImageId}</code></td><td></td></tr>
+           <tr><td><code>{@link #NMapView_blankTileImageId com.TestMap:blankTileImageId}</code></td><td></td></tr>
            </table>
            @see #NMapView_blankTileImageId
          */
@@ -96,7 +96,7 @@ containing a value of this type.
             0x7f010000
         };
         /**
-          <p>This symbol is the offset where the {@link TestMap.R.attr#blankTileImageId}
+          <p>This symbol is the offset where the {@link com.TestMap.R.attr#blankTileImageId}
           attribute's value can be found in the {@link #NMapView} array.
 
 
@@ -106,7 +106,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name TestMap:blankTileImageId
+          @attr name com.TestMap:blankTileImageId
         */
         public static final int NMapView_blankTileImageId = 0;
         /** Attributes that can be used with a NNMapView_Layout.
