@@ -10,7 +10,7 @@
 	    android:layout_width="fill_parent" 
 	    android:layout_height="0dip"  />
 	<fragment
-		android:name="com.nhn.android.mapviewer.Fragment2"
+		android:name="com.nhn.android.TestMap.Fragment2"
 		android:id="@+id/fragment2"
 		android:layout_weight="1"
 	    android:layout_width="fill_parent" 

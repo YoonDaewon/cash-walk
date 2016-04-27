@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.TestMap.test">
+    package="com.android.application.test">
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="22" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.TestMap"
+                     android:targetPackage="com.android.application"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.TestMap"/>
+                     android:label="Tests for com.android.application"/>
 </manifest>
