@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/MapToolkit-lite/Demo Scene/Demo.unity
+- path: Assets/Scene/MainScene.unity
   isLoaded: 1
   isActive: 1
