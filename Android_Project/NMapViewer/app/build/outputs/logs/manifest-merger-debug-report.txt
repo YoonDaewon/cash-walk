@@ -65,7 +65,7 @@ ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\
 	android:configChanges
 		ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:22:19-69
 	android:name
-		ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:21:19-45
+		ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:21:19-68
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
 ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:24:13-27:29
 action#android.intent.action.MAIN
@@ -81,7 +81,7 @@ ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\
 	android:configChanges
 		ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:31:19-69
 	android:name
-		ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:30:19-51
+		ADDED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml:30:19-74
 uses-sdk
 INJECTED from C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [:nmaps:] C:\Users\Yoon\Documents\cash-walk\Android_Project\NMapViewer\app\build\intermediates\exploded-aar\nmaps\AndroidManifest.xml:7:5-9:41
