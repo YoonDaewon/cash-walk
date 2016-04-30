@@ -60,7 +60,7 @@ MERGED from :nmaps::11:5
 		ADDED from AndroidManifest.xml:19:3
 	android:name
 		ADDED from AndroidManifest.xml:18:3
-activity#com.nhn.android.mapviewer.NMapViewer
+activity#com.nhn.android.TestMap.NMapViewer
 ADDED from AndroidManifest.xml:21:9
 	android:configChanges
 		ADDED from AndroidManifest.xml:22:19
@@ -76,7 +76,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:26:17
 	android:name
 		ADDED from AndroidManifest.xml:26:27
-activity#com.nhn.android.mapviewer.FragmentActivity
+activity#com.nhn.android.TestMap.FragmentActivity
 ADDED from AndroidManifest.xml:30:9
 	android:configChanges
 		ADDED from AndroidManifest.xml:31:19

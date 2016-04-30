@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.android.application;
+package com.TestMap;
 
 public final class R {
     public static final class attr {
