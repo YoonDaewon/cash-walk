@@ -48,6 +48,7 @@
      <Compile Include="Assets\MyGame.cs" />
      <Compile Include="Assets\Script\EscapeKey.cs" />
      <Compile Include="Assets\Script\ExitButton.cs" />
+     <Compile Include="Assets\Script\GoogleMap.cs" />
      <Compile Include="Assets\Script\LinkAndroid.cs" />
      <Compile Include="Assets\Script\MainBackGround.cs" />
      <Compile Include="Assets\Script\Maptest.cs" />
