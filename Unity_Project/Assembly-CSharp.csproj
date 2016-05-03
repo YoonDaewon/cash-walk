@@ -51,6 +51,7 @@
      <Compile Include="Assets\Script\LinkAndroid.cs" />
      <Compile Include="Assets\Script\MainBackGround.cs" />
      <Compile Include="Assets\Script\Maptest.cs" />
+     <Compile Include="Assets\Script\MoveImage.cs" />
      <Compile Include="Assets\Script\PlayButton.cs" />
      <Compile Include="Assets\Script\StartNextMain.cs" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
