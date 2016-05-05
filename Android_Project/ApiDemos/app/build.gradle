@@ -1,15 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.example.mapdemo"
+       // applicationId "com.example.mapdemo"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+      //  versionCode 1
+       // versionName "1.0"
     }
     buildTypes {
         release {
@@ -24,4 +24,18 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile files('libs/classes.jar')
 }
+
+task deleteOldJar(type: Delete){
+    delete 'release/nativecodemanager.jar'
+}
+
+task exportJar(type: Copy){
+    from('build/intermediates/bundles/release/')
+    into('release/')
+    include('classes.jar')
+    rename('classes.jar','nativecodemanager.jar')
+}
+
+exportJar.dependsOn(deleteOldJar, build)
