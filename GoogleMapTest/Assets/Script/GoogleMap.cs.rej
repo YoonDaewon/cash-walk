@@ -1,0 +1,10 @@
+diff a/GoogleMapTest/Assets/Script/GoogleMap.cs b/GoogleMapTest/Assets/Script/GoogleMap.cs	(rejected hunks)
+@@ -28,7 +28,7 @@
+ 	void Start () {
+         if (LoadOnStart) Refresh();
+ 	}
+-
++    
+     public void Refresh()
+     {
+         if (autoLocateCenter && (markers.Length == 0 && paths.Length == 0))
