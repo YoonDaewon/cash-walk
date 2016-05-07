@@ -36,7 +36,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/demo_title"
-        android:supportsRtl="true" >
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
 
         <!--og
              The API key for Google Maps-based APIs is defined as a string resource.
