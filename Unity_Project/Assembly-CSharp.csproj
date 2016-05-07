@@ -55,7 +55,6 @@
      <Compile Include="Assets\Script\MoveImage.cs" />
      <Compile Include="Assets\Script\PlayButton.cs" />
      <Compile Include="Assets\Script\StartNextMain.cs" />
-     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

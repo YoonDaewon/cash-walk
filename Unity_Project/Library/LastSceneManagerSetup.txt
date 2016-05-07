@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scene/MainScene.unity
-=======
-- path: Assets/Scene/StartScene.unity
->>>>>>> origin/기존이미지-제외-에셋-위주-유니티
   isLoaded: 1
   isActive: 1
