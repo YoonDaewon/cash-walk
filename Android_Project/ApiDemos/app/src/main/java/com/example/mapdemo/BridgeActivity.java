@@ -12,7 +12,7 @@ import com.unity3d.player.UnityPlayerActivity;
  * Created by Yoon on 2016-05-05.
  */
 public class BridgeActivity extends UnityPlayerActivity {
-    public static final String TAG = "YOUR-TAG-NAME";
+    public static final String TAG = "TAG_NAME";
 
     public static void callMap(Context ctx, String uuid){
         Log.i(TAG,"BridgeActivity callMap begin" );
@@ -23,7 +23,7 @@ public class BridgeActivity extends UnityPlayerActivity {
         if(null == ctx){
             Log.i(TAG,"Unity ctx is not null");
         }
-        Intent mapIntent = new Intent("com.example.mapdemo.MainActivity");
+        Intent mapIntent = new Intent("com.example.mapdemo.Activity");
 
         mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mapIntent.putExtra("UUID", uuid);
