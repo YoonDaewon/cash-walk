@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GoogleMap map;
+    private GoogleMap mMap;
     private SensorManager mSensorManager;
 
     private boolean mCompassEnabled;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        map = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 
         startLocationService();
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
         }
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(false);
+            mMap.setMyLocationEnabled(false);
         } else {
             // Show rationale and request permission.
         }
@@ -119,9 +119,9 @@ public class MainActivity extends AppCompatActivity {
     private  void showCurrentLocation(Double latitude, Double longitude){
         LatLng curPoint = new LatLng(latitude,longitude);
 
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint,15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
 
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }
 
     private  final SensorEventListener mListener = new SensorEventListener() {
