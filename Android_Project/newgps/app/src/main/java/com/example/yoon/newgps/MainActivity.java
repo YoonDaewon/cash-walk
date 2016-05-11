@@ -60,20 +60,22 @@ public class MainActivity extends AppCompatActivity {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
                 // 사용자가 임의로 권한을 취소시킨 경우
                 // 권한 재요청
-                ActivityCompat.requestPermissions(this,new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_LOCATION);
+                ActivityCompat.requestPermissions(this, new String[]
+                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
 
-                Toast.makeText(this,"권한 설정 필요", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"권한 설정 필요1", Toast.LENGTH_SHORT).show();
             }
             else {
                 // 최초로 권한을 요청하는 경우 ( 첫실행)
                 ActivityCompat.requestPermissions(this, new String[]
                         {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+                //Toast.makeText(this,"else 1", Toast.LENGTH_SHORT).show();
             }
         }
         else {
             //사용 권한이 있음을 확인한 경우
             mMap.setMyLocationEnabled(true);
+            //Toast.makeText(this,"권한 확인 후 셋 로케이션인데이블", Toast.LENGTH_SHORT).show();
         }
         if(mCompassEnabled){
             mSensorManager.registerListener(mListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
@@ -91,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
                 // 사용자가 임의로 권한을 취소시킨 경우
                 // 권한 재요청
-                ActivityCompat.requestPermissions(this,new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_LOCATION);
+                ActivityCompat.requestPermissions(this, new String[]
+                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
 
-                Toast.makeText(this,"권한 설정 필요", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"권한 설정 필요", Toast.LENGTH_SHORT).show();
             }
             else {
                 // 최초로 권한을 요청하는 경우 ( 첫실행)
@@ -106,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
             //사용 권한이 있음을 확인한 경우
             mMap.setMyLocationEnabled(false);
         }
-
 
         if(mCompassEnabled){
             mSensorManager.unregisterListener(mListener);
@@ -123,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
         long minTime = 10000;
         float minDistance = 0;
 
-
-
         // GPS 기반 위치 요청
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -133,10 +132,8 @@ public class MainActivity extends AppCompatActivity {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
                 // 사용자가 임의로 권한을 취소시킨 경우
                 // 권한 재요청
-                ActivityCompat.requestPermissions(this,new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_LOCATION);
-
-                Toast.makeText(this,"권한 설정 필요", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(this, new String[]
+                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
             }
             else {
                 // 최초로 권한을 요청하는 경우 ( 첫실행)
@@ -161,10 +158,8 @@ public class MainActivity extends AppCompatActivity {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
                 // 사용자가 임의로 권한을 취소시킨 경우
                 // 권한 재요청
-                ActivityCompat.requestPermissions(this,new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_LOCATION);
-
-                Toast.makeText(this,"권한 설정 필요", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(this, new String[]
+                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
             }
             else {
                 // 최초로 권한을 요청하는 경우 ( 첫실행)
@@ -180,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     minDistance,
                     gpsListener);
         }
-        Toast.makeText(getApplicationContext(), "위치 확인 시작함. 로그 확인", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "위치 확인.", Toast.LENGTH_SHORT).show();
     }
 
     // 리스너 정의
@@ -211,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
 
-        Toast.makeText(getApplicationContext()," 위치 확인 완료", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext()," 위치 확인 완료", Toast.LENGTH_SHORT).show();
 
         // 지도 유형 설정, 이걸로 모양 변경 가능
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
