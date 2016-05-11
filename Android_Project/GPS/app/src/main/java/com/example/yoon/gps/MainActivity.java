@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private SensorManager mSensorManager;
 
     private boolean mCompassEnabled;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +92,13 @@ public class MainActivity extends AppCompatActivity {
                     minTime,
                     minDistance,
                     gpsListener);
-        }
 
+            manager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    minTime,
+                    minDistance,
+                    gpsListener);
+        }
         Toast.makeText(getApplicationContext(),"위치 확인 시작함. 로그를 확인",Toast.LENGTH_SHORT).show();
     }
 
