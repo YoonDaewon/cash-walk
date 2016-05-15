@@ -84,6 +84,7 @@
     <Compile Include="Assets\Script\Maptest.cs" />
     <Compile Include="Assets\Script\MoveImage.cs" />
     <Compile Include="Assets\Script\PlayButton.cs" />
+    <Compile Include="Assets\Script\PlugIn.cs" />
     <Compile Include="Assets\Script\StartNextMain.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

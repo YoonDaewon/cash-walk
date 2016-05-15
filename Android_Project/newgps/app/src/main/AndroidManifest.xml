@@ -29,7 +29,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
 
         <!-- 라이브러리 사용 설정 -->
         <uses-library android:name="com.google.android.maps"/>
