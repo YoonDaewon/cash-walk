@@ -9,6 +9,7 @@ public class PlayButton : MonoBehaviour {
         if (num==1)
         {
             Application.LoadLevel("PlayScene");
+            
         }
     }
 
