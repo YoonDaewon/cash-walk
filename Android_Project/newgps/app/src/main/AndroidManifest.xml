@@ -37,7 +37,7 @@
         <!-- 구글맵 API v2 키 설정 -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBY1EsWQuEzTyEr4zNRq1SguiuBaYcgIlk" />
+            android:value="AIzaSyAfKYxChr9aaUfwvdvHMUqTEBjL4-bMFtE" />
 
         <!-- GMS 라이브러리 버전 설정 -->
         <meta-data

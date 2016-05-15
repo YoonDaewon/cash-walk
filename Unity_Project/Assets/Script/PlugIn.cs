@@ -2,8 +2,11 @@
 using System.Collections;
 
 public class PlugIn : MonoBehaviour {
-    public void CallFromNavtive(string _strLog)
+    public void OnClickButton()
     {
-        Debug.Log(_strLog);
+        using (AndroidJavaClass jc = new AndroidJavaClass("com.example.yoon.lib.NativePlugin")) 
+        {
+            jc.CallStatic("showToast", "Success!");
+        }
     }
 }
