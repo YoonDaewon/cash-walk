@@ -8,6 +8,7 @@ public class plugin : MonoBehaviour {
         using (AndroidJavaClass javaCalss = new AndroidJavaClass("com.example.yoon.lib.NativePlugin"))
         {
             javaCalss.CallStatic("showToast", "Test");
+            javaCalss.CallStatic("onCreate");
         }
     }
 }
