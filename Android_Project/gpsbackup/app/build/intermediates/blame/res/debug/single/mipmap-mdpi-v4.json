@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\GPS\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\GPS\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\test\\Android_Project\\gpsbackup\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\test\\Android_Project\\gpsbackup\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    }
+]

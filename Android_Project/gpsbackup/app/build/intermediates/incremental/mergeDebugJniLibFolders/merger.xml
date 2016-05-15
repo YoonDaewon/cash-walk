@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\test\Android_Project\gpsbackup\app\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="C:\test\Android_Project\gpsbackup\app\src\debug\jniLibs"/></dataSet></merger>

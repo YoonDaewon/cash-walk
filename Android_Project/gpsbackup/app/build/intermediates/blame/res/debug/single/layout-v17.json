@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\test\\Android_Project\\gpsbackup\\app\\build\\intermediates\\res\\merged\\debug\\layout-v17\\mr_media_route_list_item.xml",
+        "source": "C:\\test\\Android_Project\\gpsbackup\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\22.2.0\\res\\layout-v17\\mr_media_route_list_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\GPS\\app\\build\\intermediates\\res\\merged\\debug\\layout-v17\\mr_media_route_list_item.xml",
+        "source": "C:\\Users\\Yoon\\Documents\\cash-walk\\Android_Project\\GPS\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\23.0.0\\res\\layout-v17\\mr_media_route_list_item.xml"
+    }
+]
