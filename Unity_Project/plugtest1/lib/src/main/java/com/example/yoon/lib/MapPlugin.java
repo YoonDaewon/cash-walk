@@ -1,6 +1,7 @@
 package com.example.yoon.lib;
 
 import android.Manifest;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -15,13 +16,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -36,6 +37,18 @@ public class MapPlugin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MyMessages", "in ViewActivity.onCreate");
+
+        RelativeLayout mainLayout = new RelativeLayout(this);
+        mainLayout.setId(123);
+        setContentView(mainLayout);
+
+        Log.d("MyMessages", "ViewActivity Before newInstance");
+        MapFragment frag = MapFragment.newInstance(); //This is where it used to crash with it's damn classnotfound exception
+        Log.d("MyMessages", "in ViewActivity After newInstance");
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(mainLayout.getId(), frag);
+        fragmentTransaction.commit();
 
         // 지도 객체 참조
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
