@@ -36,11 +36,13 @@ public class MapPlugin extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        Log.d("MyMessages", "in ViewActivity.onCreate");
+
+        Log.d("MyMessages", "in MapPlugin.onCreate");
 
         RelativeLayout mainLayout = new RelativeLayout(this);
-        mainLayout.setId(123);
+        mainLayout.setId(0);
         setContentView(mainLayout);
 
         Log.d("MyMessages", "ViewActivity Before newInstance");
