@@ -1,7 +1,6 @@
 package com.example.yoon.lib;
 
 import android.Manifest;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -16,42 +15,46 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.unity3d.player.UnityPlayer;
 
 public class MapPlugin extends AppCompatActivity {
 
     private GoogleMap mMap;
     private SensorManager mSensorManager;
+    private UnityPlayer m_UnityPlayer;
 
     private boolean mCompassEnabled;
     private static final int REQUEST_CODE_LOCATION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        Log.d("MyMessages", "in ViewActivity.onCreate");
+        setContentView(R.layout.activity_main);
 
-        RelativeLayout mainLayout = new RelativeLayout(this);
-        mainLayout.setId(123);
-        setContentView(mainLayout);
-
-        Log.d("MyMessages", "ViewActivity Before newInstance");
-        MapFragment frag = MapFragment.newInstance(); //This is where it used to crash with it's damn classnotfound exception
-        Log.d("MyMessages", "in ViewActivity After newInstance");
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(mainLayout.getId(), frag);
-        fragmentTransaction.commit();
+        int _mapFragment = getResources().getIdentifier("map","id",getPackageName());
 
         // 지도 객체 참조
-        mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(_mapFragment)).getMap();  // ID부분 변경
+
+        m_UnityPlayer = new UnityPlayer(this);
+        int glesMode = m_UnityPlayer.getSettings().getInt("gles_mode", 1);
+        m_UnityPlayer.init(glesMode, false);
+        int unityframe = getResources().getIdentifier("unity","id",getPackageName());
+
+        FrameLayout layout = (FrameLayout) findViewById(unityframe);
+        FrameLayout.LayoutParams Ip = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        View mView = m_UnityPlayer.getView();
+        layout.addView(mView,0,Ip);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
