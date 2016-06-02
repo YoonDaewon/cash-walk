@@ -4,6 +4,7 @@ using System.Collections;
 public class PlugIn : MonoBehaviour
 {
     public static AndroidJavaClass ViewJavaClass;
+    private string imei;
 
     void Start()
     {
@@ -21,8 +22,14 @@ public class PlugIn : MonoBehaviour
             {
                 AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
                 AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-                activity.Call("showAndroidView");
+                AndroidJavaObject app = activity.Call<AndroidJavaObject>("getApplicationContext");
 
+                imei = SystemInfo.deviceUniqueIdentifier;
+
+                activity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+                {
+                    ViewJavaClass.CallStatic("showAndroidView", app, imei);
+                }));
             }
         }
         else
