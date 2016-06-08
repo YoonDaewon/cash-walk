@@ -11,9 +11,9 @@ public class PlugIn : MonoBehaviour
             var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             var jo = androidJC.GetStatic<AndroidJavaObject>("currentActivity");
             // Accessing the class to call a static method on it
-            var jc = new AndroidJavaClass("com.example.yoon.lib.MapPlugin");
+            //var jc = new AndroidJavaClass("com.example.yoon.lib.MapPlugin");
             // Calling a Call method to which the current activity is passed
-            jc.CallStatic("Call", jo);
+            jo.Call("showAndroidView");
         }
     }
 }
