@@ -1,11 +1,15 @@
 package com.example.yoon.lib;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+=======
+import android.os.Bundle;
+>>>>>>> 62fd1ad8d6a9345c0aa3005adc4ed2d72a4ff450
 import android.widget.Toast;
 
 import com.unity3d.player.UnityPlayer;
@@ -16,6 +20,7 @@ import com.unity3d.player.UnityPlayerActivity;
  */
 public class StartActivity extends UnityPlayerActivity {
 
+<<<<<<< HEAD
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -26,6 +31,21 @@ public class StartActivity extends UnityPlayerActivity {
     public void ToastMessage()
     {
         handler.sendEmptyMessage(0);
+=======
+    public void onCreate(Bundle saveInstanceState){
+        super.onCreate(saveInstanceState);
+    }
+
+    public static void showAndroidView()
+    {
+        final Activity activity = UnityPlayer.currentActivity;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(activity, "StartActivity create", Toast.LENGTH_LONG).show();
+            }
+        });
+>>>>>>> 62fd1ad8d6a9345c0aa3005adc4ed2d72a4ff450
     }
 
 

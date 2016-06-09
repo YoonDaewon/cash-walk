@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
         // 지도 객체 참조
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
 =======
+=======
+>>>>>>> 62fd1ad8d6a9345c0aa3005adc4ed2d72a4ff450
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
