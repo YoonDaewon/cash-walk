@@ -1,6 +1,8 @@
 package com.example.yoon.lib;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -90,6 +92,14 @@ public class MapPlugin extends AppCompatActivity implements
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+
+    }
+    public static void Call(Activity activity)
+    {
+        // Creating an intent with the current activity and the activity we wish to start
+        Intent myIntent = new Intent(activity, MapPlugin.class);
+        activity.startActivity(myIntent);
+        Toast.makeText(activity, "Hellow", Toast.LENGTH_SHORT).show();
 
     }
 }
