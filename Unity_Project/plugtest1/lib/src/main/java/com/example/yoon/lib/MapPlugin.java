@@ -90,5 +90,6 @@ public class MapPlugin extends AppCompatActivity implements
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+
     }
 }
