@@ -1,242 +1,94 @@
 package com.example.yoon.lib;
 
 import android.Manifest;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
-public class MapPlugin extends AppCompatActivity {
+public class MapPlugin extends AppCompatActivity implements
+        GoogleMap.OnMyLocationButtonClickListener,
+        OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback{
 
     private GoogleMap mMap;
-    private SensorManager mSensorManager;
-
-    private boolean mCompassEnabled;
-    private static final int REQUEST_CODE_LOCATION = 2;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean mPermissionDenied = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MyMessages", "in ViewActivity.onCreate");
+        setContentView(R.layout.activity_main);
 
-        RelativeLayout mainLayout = new RelativeLayout(this);
-        mainLayout.setId(123);
-        setContentView(mainLayout);
-
-        Log.d("MyMessages", "ViewActivity Before newInstance");
-        MapFragment frag = MapFragment.newInstance(); //This is where it used to crash with it's damn classnotfound exception
-        Log.d("MyMessages", "in ViewActivity After newInstance");
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(mainLayout.getId(), frag);
-        fragmentTransaction.commit();
-
-        // 지도 객체 참조
-        mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        //위치확인하며 표시 시작
-        startLocationService();
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+        mMap.setOnMyLocationButtonClickListener(this);
+        enableMyLocation();
+    }
 
-        // 내 위치 자동 표시
-        // 사용권한 체크
+    private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            //권한이 없을경우
-            // 최초 권한 요청인지, 혹은 사용자에 의한 재요청인지 확인
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                // 사용자가 임의로 권한을 취소시킨 경우
-                // 권한 재요청
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-
-                //Toast.makeText(this,"권한 설정 필요1", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                // 최초로 권한을 요청하는 경우 ( 첫실행)
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-                //Toast.makeText(this,"else 1", Toast.LENGTH_SHORT).show();
-            }
-        }
-        else {
-            //사용 권한이 있음을 확인한 경우
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
-            //Toast.makeText(this,"권한 확인 후 셋 로케이션인데이블", Toast.LENGTH_SHORT).show();
-        }
-        if(mCompassEnabled){
-            mSensorManager.registerListener(mListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
         }
     }
 
     @Override
-    public  void onPause(){
-        super.onPause();
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //권한이 없을경우
-            // 최초 권한 요청인지, 혹은 사용자에 의한 재요청인지 확인
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                // 사용자가 임의로 권한을 취소시킨 경우
-                // 권한 재요청
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
 
-                //Toast.makeText(this,"권한 설정 필요", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                // 최초로 권한을 요청하는 경우 ( 첫실행)
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-            }
-        }
-        else {
-            //사용 권한이 있음을 확인한 경우
-            mMap.setMyLocationEnabled(false);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
         }
 
-        if(mCompassEnabled){
-            mSensorManager.unregisterListener(mListener);
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            enableMyLocation();
+        } else {
+            // Display the missing permission error dialog when the fragments resume.
+            mPermissionDenied = true;
         }
     }
 
-    // 현재 위치 확인을 위해 정의한 메소드
-    private void startLocationService(){
-        // 위치 관리자 객체 참조
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        // 리스너 객체 생성
-        GPSListener gpsListener = new GPSListener();
-        long minTime = 10000;
-        float minDistance = 0;
-
-        // GPS 기반 위치 요청
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //권한이 없을경우
-            // 최초 권한 요청인지, 혹은 사용자에 의한 재요청인지 확인
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                // 사용자가 임의로 권한을 취소시킨 경우
-                // 권한 재요청
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-            }
-            else {
-                // 최초로 권한을 요청하는 경우 ( 첫실행)
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-            }
-        }
-        else {
-            //사용 권한이 있음을 확인한 경우
-            manager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    minTime,
-                    minDistance,
-                    gpsListener);
-        }
-
-        // 네트워크 기반 위치 요청
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //권한이 없을경우
-            // 최초 권한 요청인지, 혹은 사용자에 의한 재요청인지 확인
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                // 사용자가 임의로 권한을 취소시킨 경우
-                // 권한 재요청
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-            }
-            else {
-                // 최초로 권한을 요청하는 경우 ( 첫실행)
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-            }
-        }
-        else {
-            //사용 권한이 있음을 확인한 경우
-            manager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER,
-                    minTime,
-                    minDistance,
-                    gpsListener);
-        }
-        Toast.makeText(getApplicationContext(), "위치 확인.", Toast.LENGTH_SHORT).show();
-    }
-
-    // 리스너 정의
-    private class GPSListener implements LocationListener{
-        //위치 정보가 확인되면 호출되는 메서드
-        public void onLocationChanged(Location location) {
-            Double latitude = location.getLatitude();
-            Double longitude = location.getLongitude();
-
-            String msg = "Latitude : " + latitude + "\nLongitude:" + longitude;
-            Log.i("GPSLocationService", msg);
-
-            // 현재 위치의 지도를 보여주기 위해 정의한 메소드 호출
-            showCurrentLocation(latitude, longitude);
-        }
-        public void onProviderDisabled(String provider){
-        }
-        public void onProviderEnabled(String provider){
-        }
-        public  void onStatusChanged(String provider, int status, Bundle extras){
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (mPermissionDenied) {
+            // Permission was not granted, display error dialog.
+            showMissingPermissionError();
+            mPermissionDenied = false;
         }
     }
 
-    // 현재 지도를 보여주기 위해 정의한 메서드
-    private void showCurrentLocation(Double latitude, Double longitude){
-        // 현재 위치를 이용해 LatLon 객체 생성
-        LatLng curPoint = new LatLng(latitude,longitude);
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 15));
-
-        //Toast.makeText(getApplicationContext()," 위치 확인 완료", Toast.LENGTH_SHORT).show();
-
-        // 지도 유형 설정, 이걸로 모양 변경 가능
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    private void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog
+                .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
-
-    private final SensorEventListener mListener = new SensorEventListener() {
-        private  int iOrientation = -1;
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            if(iOrientation < 0)
-            {
-                iOrientation = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
 }

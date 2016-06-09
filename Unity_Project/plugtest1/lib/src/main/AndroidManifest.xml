@@ -45,7 +45,12 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
-            android:name="com.example.yoon.lib.MainActivity">
+            android:name=".StartActivity">
+
+            <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="AIzaSyAfKYxChr9aaUfwvdvHMUqTEBjL4-bMFtE" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -57,6 +62,8 @@
                 android:name="unityplayer.ForwardNativeEventsToDalvik"
                 android:value="ture" />
         </activity>
+
+        <activity android:name=".MapPlugin"/>
 
     </application>
 
