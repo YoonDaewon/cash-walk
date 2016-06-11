@@ -7,11 +7,16 @@ public class PlugIn : MonoBehaviour
     {
         if (GUI.Button(new Rect(0, 0, 200, 200), "Login"))
         {
-            AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject cur_activity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaClass AndroidPlayer = new AndroidJavaClass("com.example.yoon.lib.StartActivity");
-            //AndroidPlayer.CallStatic("showAndroidView");
-            AndroidPlayer.CallStatic("Call", cur_activity);
+
+            // to get the activity
+            var androidJC = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            var jo = androidJC.GetStatic<AndroidJavaObject>("currentActivity");
+            // Accessing the class to call a static method on it
+            var jc = new AndroidJavaClass("com.example.yoon.lib.StartActivity");
+            // Calling a Call method to which the current activity is passed
+            jc.CallStatic("Call", jo);
+
         }
     }
+
 }
