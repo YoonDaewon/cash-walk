@@ -52,26 +52,30 @@
 
         <!-- Start Activity -->
         <activity android:label="@string/app_name"
-               android:name="com.example.yoon.lib.StartActivity">
-
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:name="com.example.yoon.lib.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+            <meta-data
+                android:name="unityplayer.UnityActivity"
+                android:value="true" />
         </activity>
 
         <!-- MapPlugin Activity -->
         <activity
             android:label="@string/app_name"
-            android:name="com.example.yoon.lib.MapPlugin"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask">
+            android:name="com.example.yoon.lib.MapPlugin">
 
-            <meta-data
-                android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyAfKYxChr9aaUfwvdvHMUqTEBjL4-bMFtE" />
+            <intent-filter>
+                <action android:name="com.example.yoon.lib.secondview">
+                    <category android:name="android.intent.category.DEFAULT">
+                    </category>
+                </action>
+            </intent-filter>
         </activity>
 
         <!-- UnityNative Activity -->
