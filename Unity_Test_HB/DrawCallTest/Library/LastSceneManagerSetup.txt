@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/NGUI/Examples/Scenes/Tutorial X - Video.unity
+- path: Assets/NGUI/Examples/Scenes/Example 2 - Interaction.unity
   isLoaded: 1
   isActive: 1
