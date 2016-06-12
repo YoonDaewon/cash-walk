@@ -99,7 +99,5 @@ public class MapPlugin extends AppCompatActivity implements
         // Creating an intent with the current activity and the activity we wish to start
         Intent myIntent = new Intent(activity, MapPlugin.class);
         activity.startActivity(myIntent);
-        Toast.makeText(activity, "Hellow", Toast.LENGTH_SHORT).show();
-
     }
 }
