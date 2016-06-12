@@ -12,10 +12,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="스타트 액티비티"
         android:id="@+id/button"
         android:layout_marginTop="54dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onButtonClicked" />
+        android:onClick="button" />
 </RelativeLayout>
