@@ -1,8 +1,6 @@
 package jaewon.markertest;
 
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,7 +18,7 @@ public class MainActivity extends Activity {
 
     static final LatLng SEOUL = new LatLng (37.56,126.97);
     private GoogleMap map;
-    private ArrayList<LatLng> arrayPoints;
+
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

@@ -27,7 +27,7 @@ public class MapPlugin extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -94,6 +94,7 @@ public class MapPlugin extends AppCompatActivity implements
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
 
     }
+
     public static void Call(Activity activity)
     {
         // Creating an intent with the current activity and the activity we wish to start
