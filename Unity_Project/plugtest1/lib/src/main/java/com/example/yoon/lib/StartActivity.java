@@ -15,9 +15,12 @@ public class StartActivity extends Activity {
         Button button =  (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "Hellow", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), TestActivity.class);
                 startActivity(intent);
+
+                //Toast.makeText(getApplicationContext(), "Hellow", Toast.LENGTH_SHORT).show();
+                //Intent intent = new Intent(getBaseContext(), TestActivity.class);
+               // startActivity(intent);
             }
         });
     }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class StartNextMain : MonoBehaviour {
 
-    private float TimeLeft = 3.0f;
+    private float TimeLeft = 1.0f;
 
     public void NextScene()
     {

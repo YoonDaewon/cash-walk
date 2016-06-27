@@ -3,7 +3,6 @@ package com.example.yoon.lib;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.unity3d.player.UnityPlayerActivity;
 
 public class MainActivity extends UnityPlayerActivity {
