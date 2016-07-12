@@ -23,12 +23,11 @@ import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.Map;
 
-public class Main22Activity extends UnityPlayerActivity {
+public class Main22Activity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MyMessages", "in ViewActivity.onCreate");
-
+        /*
         RelativeLayout mainLayout = new RelativeLayout(this);
         mainLayout.setId('s');
         setContentView(mainLayout);
@@ -39,7 +38,7 @@ public class Main22Activity extends UnityPlayerActivity {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(mainLayout.getId(), frag);
         fragmentTransaction.commit();
-
+*/
 
     }
     public void showAndroidView()
