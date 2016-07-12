@@ -1,24 +1,21 @@
 package com.example.yoon.newgps;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-<<<<<<< HEAD
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-
-=======
->>>>>>> bfc9837a57244cf2f142a88398b0d1db58c424f5
 
 public class MainActivity extends AppCompatActivity implements
         OnMyLocationButtonClickListener,
@@ -33,28 +30,18 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
 
-<<<<<<< HEAD
         // 지도 객체 참조
         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-
-
         //위치확인하며 표시 시작
         startLocationService();
 
-
-
-=======
-=======
->>>>>>> 62fd1ad8d6a9345c0aa3005adc4ed2d72a4ff450
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
->>>>>>> bfc9837a57244cf2f142a88398b0d1db58c424f5
     }
 
     @Override
@@ -100,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements
             // Display the missing permission error dialog when the fragments resume.
             mPermissionDenied = true;
         }
-<<<<<<< HEAD
     };
 
 
@@ -109,8 +95,6 @@ public class MainActivity extends AppCompatActivity implements
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-=======
->>>>>>> bfc9837a57244cf2f142a88398b0d1db58c424f5
     }
 
     @Override
@@ -127,7 +111,4 @@ public class MainActivity extends AppCompatActivity implements
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
-
-
-
 }

@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.util.Log;
 
 import com.unity3d.player.UnityPlayer;
+=======
+>>>>>>> 13af56205f7fa0f0346cf2cca499a7e166a3201d
 import com.unity3d.player.UnityPlayerActivity;
 
 

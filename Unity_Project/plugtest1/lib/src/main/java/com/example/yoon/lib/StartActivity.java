@@ -57,6 +57,20 @@ import com.unity3d.player.UnityPlayerActivity;
         Intent intent = new Intent(getApplicationContext(), Main22Activity.class);
         startActivity(intent);
 
+<<<<<<< HEAD
+=======
+        Button button =  (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+                startActivity(intent);
+
+                //Toast.makeText(getApplicationContext(), "Hellow", Toast.LENGTH_SHORT).show();
+                //Intent intent = new Intent(getBaseContext(), TestActivity.class);
+               // startActivity(intent);
+            }
+        });
+>>>>>>> 13af56205f7fa0f0346cf2cca499a7e166a3201d
     }
 
 }

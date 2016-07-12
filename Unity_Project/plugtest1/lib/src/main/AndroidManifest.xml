@@ -94,6 +94,7 @@
                 android:name="unityplayer.UnityActivity"
                 android:value="true" />
         </activity>
+<<<<<<< HEAD
         -->
         <!-- main22activity-->
         <activity
@@ -112,6 +113,14 @@
             </intent-filter>
         </activity>
 
+=======
+
+        <!-- Test Activity -->
+        <activity android:name=".TestActivity"
+            android:label="@string/app_name">
+        </activity>
+
+>>>>>>> 13af56205f7fa0f0346cf2cca499a7e166a3201d
     </application>
 
 </manifest>
