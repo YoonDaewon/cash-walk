@@ -1,24 +1,40 @@
 package com.example.yoon.cashwalknm;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nhn.android.maps.NMapActivity;
+import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapController;
+import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
+import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
+import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
 public class MainActivity extends NMapActivity {
 
     //정의
     private NMapView mMapView;
     private NMapController mMapController;
+    private NMapOverlayManager mOverlayManager;
+    private NMapMyLocationOverlay mMyLocationOverlay;
+    private NMapLocationManager mMapLocationManager;
+    private NMapCompassManager mMapCompassManager;
+    private MapContainerView mMapContainerView;
+
     private static final String CLIENT_ID = "jLSZMsTP7rso3Qlz80_X";
     private static final String LOG_TAG = "Cash Walk";
     private static final boolean DEBUG = false;
@@ -37,6 +53,8 @@ public class MainActivity extends NMapActivity {
     private static final boolean NMAP_TRAFFIC_MODE_DEFAULT = false;
     private static final boolean NMAP_BICYCLE_MODE_DEFAULT = false;
 
+    private NMapViewerResourceProvider mMapViewerResourceProvider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +65,12 @@ public class MainActivity extends NMapActivity {
         //set Clients ID
         mMapView.setClientId(CLIENT_ID);
 
+        // 맵 회전을 위한 부모 뷰 생성
+        mMapContainerView = new MapContainerView(this);
+        mMapContainerView.addView(mMapView);
+
         //set the acticity content to map view
-        setContentView(mMapView);
+        setContentView(mMapContainerView);
 
         // initialize map view
         mMapView.setClickable(true);
@@ -63,6 +85,22 @@ public class MainActivity extends NMapActivity {
 
         // 지도 줌을 위한 내장컨트롤로 사용 설정
         mMapView.setBuiltInZoomControls(true, null);
+
+        // 리소스 제공자 객체 생성
+        mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
+
+        // 오버레이 매니저 생성
+        mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
+
+        // 위치 서비스를 위한 객체 생성
+        mMapLocationManager = new NMapLocationManager(this);
+        mMapLocationManager.setOnLocationChangeListener(onMyLocationChangeListener);
+
+        // 맵 회전을 위한 객체 생성
+        mMapCompassManager = new NMapCompassManager(this);
+
+        // 내 위치 오버레이 생성
+        mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager,mMapCompassManager);
     }
 
     // 예외 처리를 위한
@@ -197,5 +235,149 @@ public class MainActivity extends NMapActivity {
             // TODO Auto-generated method stub
         }
     };
+
+
+    private void startMyLocation() {
+
+        if (mMyLocationOverlay != null) {
+            if (!mOverlayManager.hasOverlay(mMyLocationOverlay)) {
+                mOverlayManager.addOverlay(mMyLocationOverlay);
+            }
+
+            if (mMapLocationManager.isMyLocationEnabled()) {
+
+                if (!mMapView.isAutoRotateEnabled()) {
+                    mMyLocationOverlay.setCompassHeadingVisible(true);
+
+                    mMapCompassManager.enableCompass();
+
+                    mMapView.setAutoRotateEnabled(true, false);
+
+                    mMapContainerView.requestLayout();
+                } else {
+                    stopMyLocation();
+                }
+
+                mMapView.postInvalidate();
+            } else {
+                boolean isMyLocationEnabled = mMapLocationManager.enableMyLocation(true);
+                if (!isMyLocationEnabled) {
+                    Toast.makeText(MainActivity.this, "Please enable a My Location source in system settings",
+                            Toast.LENGTH_LONG).show();
+
+                    Intent goToSettings = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(goToSettings);
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private void stopMyLocation() {
+        if (mMyLocationOverlay != null) {
+            mMapLocationManager.disableMyLocation();
+
+            if (mMapView.isAutoRotateEnabled()) {
+                mMyLocationOverlay.setCompassHeadingVisible(false);
+
+                mMapCompassManager.disableCompass();
+
+                mMapView.setAutoRotateEnabled(false, false);
+
+                mMapContainerView.requestLayout();
+            }
+        }
+    }
+
+    /* MyLocation Listener */
+    private final NMapLocationManager.OnLocationChangeListener onMyLocationChangeListener = new NMapLocationManager.OnLocationChangeListener() {
+
+        @Override
+        public boolean onLocationChanged(NMapLocationManager locationManager, NGeoPoint myLocation) {
+
+            if (mMapController != null) {
+                mMapController.animateTo(myLocation);
+            }
+
+            return true;
+        }
+
+        @Override
+        public void onLocationUpdateTimeout(NMapLocationManager locationManager) {
+
+            // stop location updating
+            //			Runnable runnable = new Runnable() {
+            //				public void run() {
+            //					stopMyLocation();
+            //				}
+            //			};
+            //			runnable.run();
+
+            Toast.makeText(MainActivity.this, "Your current location is temporarily unavailable.", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onLocationUnavailableArea(NMapLocationManager locationManager, NGeoPoint myLocation) {
+
+            Toast.makeText(MainActivity.this, "Your current location is unavailable area.", Toast.LENGTH_LONG).show();
+
+            stopMyLocation();
+        }
+
+    };
+
+    /**
+     * Container view class to rotate map view.
+     */
+    private class MapContainerView extends ViewGroup {
+
+        public MapContainerView(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+            final int width = getWidth();
+            final int height = getHeight();
+            final int count = getChildCount();
+            for (int i = 0; i < count; i++) {
+                final View view = getChildAt(i);
+                final int childWidth = view.getMeasuredWidth();
+                final int childHeight = view.getMeasuredHeight();
+                final int childLeft = (width - childWidth) / 2;
+                final int childTop = (height - childHeight) / 2;
+                view.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
+            }
+
+            if (changed) {
+                mOverlayManager.onSizeChanged(width, height);
+            }
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            int w = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
+            int h = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
+            int sizeSpecWidth = widthMeasureSpec;
+            int sizeSpecHeight = heightMeasureSpec;
+
+            final int count = getChildCount();
+            for (int i = 0; i < count; i++) {
+                final View view = getChildAt(i);
+
+                if (view instanceof NMapView) {
+                    if (mMapView.isAutoRotateEnabled()) {
+                        int diag = (((int)(Math.sqrt(w * w + h * h)) + 1) / 2 * 2);
+                        sizeSpecWidth = MeasureSpec.makeMeasureSpec(diag, MeasureSpec.EXACTLY);
+                        sizeSpecHeight = sizeSpecWidth;
+                    }
+                }
+
+                view.measure(sizeSpecWidth, sizeSpecHeight);
+            }
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
 }
 
