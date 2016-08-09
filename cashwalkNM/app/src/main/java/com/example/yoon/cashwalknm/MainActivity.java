@@ -36,8 +36,9 @@ public class MainActivity extends NMapActivity {
     private MapContainerView mMapContainerView;
 
     private static final String CLIENT_ID = "jLSZMsTP7rso3Qlz80_X";
-    private static final String LOG_TAG = "Cash Walk";
+    private static final String LOG_TAG = "MainActivity";
     private static final boolean DEBUG = false;
+
     private SharedPreferences mPreferences;
 
     private static final String KEY_ZOOM_LEVEL = "NMapViewer.zoomLevel";
@@ -54,26 +55,37 @@ public class MainActivity extends NMapActivity {
     private static final boolean NMAP_BICYCLE_MODE_DEFAULT = false;
 
     private NMapViewerResourceProvider mMapViewerResourceProvider;
+    private static boolean USE_XML_LAYOUT = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // create map
-        mMapView = new NMapView(this);
+        if(USE_XML_LAYOUT){
+            setContentView(R.layout.activity_main);
+
+            mMapView = (NMapView)findViewById(R.id.mapView);
+        } else {
+            // create map
+            mMapView = new NMapView(this);
+
+            // 맵 회전을 위한 부모 뷰 생성
+            mMapContainerView = new MapContainerView(this);
+            mMapContainerView.addView(mMapView);
+
+            //set the acticity content to map view
+            setContentView(mMapContainerView);
+        }
 
         //set Clients ID
         mMapView.setClientId(CLIENT_ID);
 
-        // 맵 회전을 위한 부모 뷰 생성
-        mMapContainerView = new MapContainerView(this);
-        mMapContainerView.addView(mMapView);
-
-        //set the acticity content to map view
-        setContentView(mMapContainerView);
-
         // initialize map view
         mMapView.setClickable(true);
+        mMapView.setEnabled(true);
+        mMapView.setFocusable(true);
+        mMapView.setFocusableInTouchMode(true);
+        mMapView.requestFocus();
 
         // 맵 상태 변환을 위한 리스너 등록
         // 지도 초기화가 완료되면 아래의 콜백 인터페이스가 호출됨
@@ -84,7 +96,9 @@ public class MainActivity extends NMapActivity {
         mMapController = mMapView.getMapController();
 
         // 지도 줌을 위한 내장컨트롤로 사용 설정
-        mMapView.setBuiltInZoomControls(true, null);
+        NMapView.LayoutParams lp = new NMapView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, NMapView.LayoutParams.BOTTOM_RIGHT);
+        mMapView.setBuiltInZoomControls(true, lp);
 
         // 리소스 제공자 객체 생성
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
@@ -103,6 +117,27 @@ public class MainActivity extends NMapActivity {
         mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager,mMapCompassManager);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+    @Override
+    protected void onStop() {
+        stopMyLocation();
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy() {
+
+        // save map view state such as map center position and zoom level.
+        //saveInstanceState();
+
+        super.onDestroy();
+    }
     // 예외 처리를 위한
     public void onMapInitHandler(NMapView mapView, NMapError errorInfo){
         if(errorInfo == null) { //  success
