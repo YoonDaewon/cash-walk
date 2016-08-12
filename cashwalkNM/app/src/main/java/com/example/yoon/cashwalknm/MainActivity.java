@@ -292,9 +292,6 @@ public class MainActivity extends NMapActivity {
 
 
     private void startMyLocation() {
-
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
         if (mMyLocationOverlay != null) {
             if (!mOverlayManager.hasOverlay(mMyLocationOverlay)) {
                 mOverlayManager.addOverlay(mMyLocationOverlay);
@@ -441,6 +438,5 @@ public class MainActivity extends NMapActivity {
         int res = this.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
     }
-
 }
 
