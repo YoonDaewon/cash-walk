@@ -20,8 +20,11 @@ import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.maps.overlay.NMapPOIdata;
+import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
+import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
 public class MainActivity extends NMapActivity {
@@ -56,6 +59,9 @@ public class MainActivity extends NMapActivity {
 
     private NMapViewerResourceProvider mMapViewerResourceProvider;
     private static boolean USE_XML_LAYOUT = false;
+
+    private NMapPOIitem mFloatingPOIitem;
+    private NMapPOIdataOverlay mFloatingPOIdataOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +112,14 @@ public class MainActivity extends NMapActivity {
         // 오버레이 매니저 생성
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
+        int markerId = NMapPOIflagType.PIN;
+        NMapPOIdata poiData = new NMapPOIdata(2,mMapViewerResourceProvider);
+        poiData.beginPOIdata(2);
+        poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
+        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+        poiData.endPOIdata();
+        //오버레이 객체 생성
+
         // 위치 서비스를 위한 객체 생성
         mMapLocationManager = new NMapLocationManager(this);
         mMapLocationManager.setOnLocationChangeListener(onMyLocationChangeListener);
@@ -115,11 +129,19 @@ public class MainActivity extends NMapActivity {
 
         // 내 위치 오버레이 생성
         mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager,mMapCompassManager);
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        testPOIdataOverlay();
+        //mOverlayManager.clearOverlays();
+        //testFloatingPOIdataOverlay();
+
+
+
     }
     @Override
     protected void onResume() {
@@ -414,5 +436,111 @@ public class MainActivity extends NMapActivity {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
+    private void testPOIdataOverlay() {
+
+        // Markers for POI item
+        int markerId = NMapPOIflagType.PIN;
+
+        double a,b,c,d;
+        a = 127.0630205;
+        b = 37.5091300;
+        c = 127.061;
+        d = 37.51;
+        // set POI data
+        NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
+        poiData.beginPOIdata(2);
+        NMapPOIitem item = poiData.addPOIitem(a, b, "치킨", markerId, 0);
+        item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+        poiData.addPOIitem(c, d, "피자", markerId, 0);
+        poiData.endPOIdata();
+
+        // create POI data overlay
+        NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+
+        // set event listener to the overlay
+        poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+
+        // select an item
+        poiDataOverlay.selectPOIitem(0, true);
+
+        // show all POI data
+        //poiDataOverlay.showAllPOIdata(0);
+    }
+    private final NMapPOIdataOverlay.OnStateChangeListener onPOIdataStateChangeListener = new NMapPOIdataOverlay.OnStateChangeListener() {
+
+        @Override
+        public void onCalloutClick(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+            if (DEBUG) {
+                Log.i(LOG_TAG, "onCalloutClick: title=" + item.getTitle());
+            }
+
+            // [[TEMP]] handle a click event of the callout
+            Toast.makeText(MainActivity.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onFocusChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+            if (DEBUG) {
+                if (item != null) {
+                    Log.i(LOG_TAG, "onFocusChanged: " + item.toString());
+                } else {
+                    Log.i(LOG_TAG, "onFocusChanged: ");
+                }
+            }
+        }
+    };
+
+    private void testFloatingPOIdataOverlay() {
+        // Markers for POI item
+        int marker1 = NMapPOIflagType.PIN;
+
+        // set POI data
+        NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+        poiData.beginPOIdata(1);
+        NMapPOIitem item = poiData.addPOIitem(null, "Touch & Drag to Move", marker1, 0);
+        if (item != null) {
+            // initialize location to the center of the map view.
+            item.setPoint(mMapController.getMapCenter());
+            // set floating mode
+            item.setFloatingMode(NMapPOIitem.FLOATING_TOUCH | NMapPOIitem.FLOATING_DRAG);
+            // show right button on callout
+            item.setRightButton(true);
+
+            mFloatingPOIitem = item;
+        }
+        poiData.endPOIdata();
+
+        // create POI data overlay
+        NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+        if (poiDataOverlay != null) {
+            poiDataOverlay.setOnFloatingItemChangeListener(onPOIdataFloatingItemChangeListener);
+
+            // set event listener to the overlay
+            poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+
+            poiDataOverlay.selectPOIitem(0, false);
+
+            mFloatingPOIdataOverlay = poiDataOverlay;
+        }
+    }
+
+    private final NMapPOIdataOverlay.OnFloatingItemChangeListener onPOIdataFloatingItemChangeListener = new NMapPOIdataOverlay.OnFloatingItemChangeListener() {
+
+        @Override
+        public void onPointChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+            NGeoPoint point = item.getPoint();
+
+            if (DEBUG) {
+                Log.i(LOG_TAG, "onPointChanged: point=" + point.toString());
+            }
+
+            findPlacemarkAtLocation(point.longitude, point.latitude);
+
+            item.setTitle(null);
+
+        }
+    };
+    public void Onclicklistenr ()
+
 }
 
