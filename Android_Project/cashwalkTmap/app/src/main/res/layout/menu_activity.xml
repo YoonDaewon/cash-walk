@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    tools:context=".TitleActivity"
+    android:background="@drawable/menu">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="95dp"
+        android:layout_marginStart="95dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ghost"
+        android:onClick="ChangePlayScene" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeattack"
+        android:background="@drawable/ghost"
+        android:layout_below="@+id/start"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/start"
+        android:layout_alignStart="@+id/start"
+        android:onClick="ChangeTAScene" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mypage"
+        android:background="@drawable/ghost"
+        android:layout_above="@+id/exit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/timeattack"
+        android:layout_alignStart="@+id/timeattack"
+        android:onClick="ChangeMPScene" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/mypage"
+        android:layout_alignStart="@+id/mypage"
+        android:layout_alignRight="@+id/mypage"
+        android:layout_alignEnd="@+id/mypage"
+        android:background="@drawable/ghost"
+        android:onClick="Exit" />
+</RelativeLayout>
