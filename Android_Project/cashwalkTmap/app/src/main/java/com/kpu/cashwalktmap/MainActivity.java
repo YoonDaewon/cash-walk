@@ -275,6 +275,12 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             @Override
             public boolean onPressUpEvent(ArrayList<TMapMarkerItem> markerlist,ArrayList<TMapPOIItem> poilist, TMapPoint point, PointF pointf) {
                 LogManager.printLog("MainActivity onPressUpEvent " + markerlist.size());
+
+                if(drawPath)
+                {
+                    drawCashPath(g_Point);
+                }
+
                 return false;
             }
 
@@ -896,7 +902,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     // 경로 그리는 함수
     public void drawCashPath(TMapPoint point2) {
-        TMapPoint point1 = mMapView.getCenterPoint();
+        TMapPoint point1 = mMapView.getLocationPoint();
         TMapData tmapdata = new TMapData();
 
         tmapdata.findPathDataWithType(TMapPathType.PEDESTRIAN_PATH, point1, point2, new FindPathDataListenerCallback() {
