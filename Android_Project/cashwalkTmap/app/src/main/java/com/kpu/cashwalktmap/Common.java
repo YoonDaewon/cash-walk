@@ -30,7 +30,7 @@ public class Common {
         if(alertDialog == null && isAlertDialogShow != true)
         {
             alertDialog = new AlertDialog.Builder(ctx)
-                    .setIcon(R.drawable.ic_launcher)
+                    .setIcon(R.drawable.save_coin)
                     .setTitle(title)
                     .setMessage(msg)
                     .setNeutralButton("확인", new DialogInterface.OnClickListener() {

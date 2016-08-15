@@ -49,3 +49,19 @@ public class MainActivity extends Activity {
 
 }
 
+    public void getLocationPoint() {
+        TMapPoint point = mMapView.getLocationPoint();
+
+        double Latitude = point.getLatitude();
+        double Longitude = point.getLongitude();
+
+        m_Latitude  = Latitude;
+        m_Longitude = Longitude;
+
+        LogManager.printLog("Latitude " + Latitude + " Longitude " + Longitude);
+
+        String strResult = String.format("Latitude = %f Longitude = %f", Latitude, Longitude);
+
+        Common.showAlertDialog(this, "", strResult);
+    }
+
