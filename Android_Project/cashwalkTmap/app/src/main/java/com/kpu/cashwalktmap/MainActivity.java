@@ -24,6 +24,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.location.Location;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -123,6 +125,11 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     // 도착 알람을 위한 오차범위 설정
     private double radius = 100;
 
+    // 노래 재생을 위한 전역변수 설정
+    private SoundPool mSoundPool;
+    private int streamid;
+    private int soundid;
+
     private 	boolean 	m_bShowMapIcon = true;    // 자기 위치 아이콘 표시
 
     private 	boolean 	checkGoal = false;
@@ -202,6 +209,12 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         // 자기 위치 아이콘 표시
         setMapIcon();
 
+        //Pool 생성
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        // 사운드 로드
+        soundid = mSoundPool.load(this, R.raw.track1,1);
+        // 사운드 재생
+        streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
     /**
      * setSKPMapApiKey()에 ApiKey를 입력 한다.
@@ -322,11 +335,19 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     @Override
     protected void onResume() {
         super.onResume();
+        streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 화면 전환시 노래 종료
+        mSoundPool.stop(streamid);
     }
 
     @Override

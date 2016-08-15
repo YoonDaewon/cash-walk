@@ -2,6 +2,8 @@ package com.kpu.cashwalktmap;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,20 +12,36 @@ import android.view.View;
 /**
  * Created by ydwin on 2016-08-16.
  */
+
 public class MenuActivity extends AppCompatActivity{
+
+    private SoundPool mSoundPool;
+    private int streamid;
+    private int soundid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_activity);
+
+        //Pool 생성
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        // 사운드 로드
+        soundid = mSoundPool.load(this, R.raw.track2,1);
+        // 사운드 재생
+        streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
     @Override
     protected void onStop() {
         super.onStop();
+        // 화면 전환시 노래 종료
+        mSoundPool.stop(streamid);
     }
     @Override
     protected void onDestroy() {

@@ -2,6 +2,8 @@ package com.kpu.cashwalktmap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,6 +29,7 @@ public class TitleActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        // 화면 전환시 액티비티 종료
         activity.finish();
     }
     @Override
