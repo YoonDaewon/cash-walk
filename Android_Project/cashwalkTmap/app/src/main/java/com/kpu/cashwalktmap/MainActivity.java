@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.skp.Tmap.BizCategory;
+import com.skp.Tmap.MapUtils;
 import com.skp.Tmap.TMapCircle;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapData.BizCategoryListenerCallback;
@@ -68,7 +69,17 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         }
         if(drawPath)
         {
-            drawCashPath(g_Point);
+            drawCashPath(s_Point, g_Point);
+
+            TMapPoint m_point = mMapView.getLocationPoint();
+
+            checkArrive(m_point,g_Point);
+            if(checkGoal){
+                String strMessage = "적립되었습니다.\n소모 칼로리 : \n총 이동거리 : \n소요시간 : ";
+                Common.showAlertDialog(MainActivity.this, " ", strMessage);
+                checkGoal = false;
+                drawPath = false;
+            }
         }
     }
 
@@ -81,57 +92,21 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public static String mBizAppID; // 발급받은 BizAppID (TMapTapi로 TMap앱 연동을 할 때 BizAppID 꼭 필요)
 
     private static final int[] mArrayMapButton = {
-            //R.id.btnOverlay,
-           // R.id.btnAnimateTo,
             R.id.btnZoomIn,
             R.id.btnZoomOut,
             R.id.btnGetZoomLevel,
             R.id.btnSetZoomLevel,
-           // R.id.btnSetMapType,
             R.id.btnGetLocationPoint,
             R.id.btnSetLocationPoint,
             R.id.btnSetIcon,
             R.id.btnSetCompassMode,
             R.id.btnGetIsCompass,
-            //R.id.btnSetTrafficInfo,
-           // R.id.btnGetIsTrafficeInfo,
             R.id.btnSetSightVisible,
             R.id.btnSetTrackIngMode,
             R.id.btnGetIsTracking,
-           // R.id.btnAddTMapCircle,
-            //R.id.btnRemoveTMapCircle,
-            R.id.btnMarkerPoint,
-            R.id.btnRemoveMarker,
-            R.id.btnMoveFrontMarker,
-            R.id.btnMoveBackMarker,
-            //R.id.btnDrawPolyLine,
-            //R.id.btnErasePolyLine,
-            //R.id.btnDrawPolygon,
-            //R.id.btnErasePolygon,
-            //R.id.btnBicycle,
-            //R.id.btnBicycleFacility,
             R.id.btnMapPath,
             R.id.btnRemoveMapPath,
-            R.id.btnDisplayMapInfo,
-            R.id.btnNaviGuide,
-            R.id.btnCarPath,
-            R.id.btnPedestrian_Path,
-            R.id.btnBicycle_Path,
             R.id.btnGetCenterPoint,
-
-           // R.id.btnFindAllPoi,
-            //R.id.btnConvertToAddress,
-            //R.id.btnGetBizCategory,
-            //R.id.btnGetAroundBizPoi,
-            //R.id.btnTileType,
-            //R.id.btnCapture,
-            //R.id.btnDisalbeZoom,
-           // R.id.btnInvokeRoute,
-           // R.id.btnInvokeSetLocation,
-            //R.id.btnInvokeSearchPortal,
-            //R.id.btnTimeMachine,
-           // R.id.btnTMapInstall,
-            R.id.btnMarkerPoint2,
     };
 
     private 	int 		m_nCurrentZoomLevel = 0;
@@ -142,16 +117,18 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private double g_Longitude = 0;
 
     // 현재 위치와 목표 위치를 저장하기 위한point 변수
-    private TMapPoint m_Point;
+    private TMapPoint s_Point;
     private TMapPoint g_Point;
+
+    // 도착 알람을 위한 오차범위 설정
+    private double radius = 100;
 
     private 	boolean 	m_bShowMapIcon = true;    // 자기 위치 아이콘 표시
 
-    private 	boolean 	m_bTrafficeMode = false;
+    private 	boolean 	checkGoal = false;
     private 	boolean 	m_bSightVisible = false;
     private 	boolean 	m_bTrackingMode = true;   // 추적 모드 on
     private    boolean   drawPath = false;
-
     private 	boolean 	m_bOverlayMode = false;
 
     ArrayList<String>		mArrayID;
@@ -169,7 +146,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private static int 		mMarkerID;
 
     TMapGpsManager gps = null;
-
 
     /**
      * onCreate()
@@ -210,9 +186,9 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         mMarkerID = 0;
 
         gps = new TMapGpsManager(MainActivity.this);
-        gps.setMinTime(100);
-        gps.setMinDistance(2);
-        gps.setProvider(gps.NETWORK_PROVIDER);
+        gps.setMinTime(500);
+        gps.setMinDistance(5);
+        gps.setProvider(gps.GPS_PROVIDER);
         gps.OpenGps();
 
         mMapView.setTMapLogoPosition(TMapLogoPositon.POSITION_BOTTOMRIGHT);
@@ -225,6 +201,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         // 자기 위치 아이콘 표시
         setMapIcon();
+
     }
     /**
      * setSKPMapApiKey()에 ApiKey를 입력 한다.
@@ -275,12 +252,10 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             @Override
             public boolean onPressUpEvent(ArrayList<TMapMarkerItem> markerlist,ArrayList<TMapPOIItem> poilist, TMapPoint point, PointF pointf) {
                 LogManager.printLog("MainActivity onPressUpEvent " + markerlist.size());
-
                 if(drawPath)
                 {
-                    drawCashPath(g_Point);
+                    drawCashPath(s_Point, g_Point);
                 }
-
                 return false;
             }
 
@@ -305,8 +280,12 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
                 // 목적지 위치를 g_Point에 저장
                 g_Point = point;
+                // 현재 위치를 s_Point 전역 변수에 저장
+                s_Point = mMapView.getLocationPoint();
 
-                String strResult = String.format("클릭 좌표 Latitude = %f Longitude = %f", g_Latitude, g_Longitude);
+                double Distance = MapUtils.getDistance(s_Point,g_Point);
+
+                String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
 
                 // 경로 그리는 트리거 on
                 drawPath = true;
@@ -337,7 +316,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         m_nCurrentZoomLevel = -1;
         m_bShowMapIcon = true;
-        m_bTrafficeMode = false;
         m_bSightVisible = false;
     }
 
@@ -366,58 +344,24 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            //case R.id.btnOverlay		  : 	overlay(); 				break;
-            //case R.id.btnAnimateTo		  : 	animateTo(); 			break;
             case R.id.btnZoomIn			  : 	mapZoomIn(); 			break;
             case R.id.btnZoomOut		  : 	mapZoomOut(); 			break;
             case R.id.btnGetZoomLevel	  :  	getZoomLevel(); 		break;
             case R.id.btnSetZoomLevel	  :  	setZoomLevel(); 		break;
-            //case R.id.btnSetMapType		  :		setMapType(); 			break;
             case R.id.btnGetLocationPoint : 	getLocationPoint(); 	break;
             case R.id.btnSetLocationPoint : 	setLocationPoint(); 	break;
             case R.id.btnSetIcon		  : 	setMapIcon(); 			break;
             case R.id.btnSetCompassMode	  : 	setCompassMode();		break;
             case R.id.btnGetIsCompass     :		getIsCompass();			break;
-            //case R.id.btnSetTrafficInfo	  :		setTrafficeInfo();		break;
-            //case R.id.btnGetIsTrafficeInfo: 	getIsTrafficeInfo();	break;
             case R.id.btnSetSightVisible  : 	setSightVisible();		break;
             case R.id.btnSetTrackIngMode  : 	setTrackingMode();		break;
             case R.id.btnGetIsTracking	  : 	getIsTracking();		break;
-            //case R.id.btnAddTMapCircle	  : 	addTMapCircle();		break;
-            //case R.id.btnRemoveTMapCircle : 	removeTMapCircle();		break;
-            case R.id.btnMarkerPoint	  :     showMarkerPoint(); 		break;
-            case R.id.btnRemoveMarker     : 	removeMarker(); 		break;
-            case R.id.btnMoveFrontMarker  :     moveFrontMarker(); 		break;
-            case R.id.btnMoveBackMarker   :     moveBackMarker();		break;
-            //case R.id.btnDrawPolyLine     :     drawLine();			 	break;
-            //case R.id.btnErasePolyLine	  : 	erasePolyLine();		break;
-            //case R.id.btnDrawPolygon	  : 	drawPolygon(); 			break;
-            //case R.id.btnErasePolygon     :     removeTMapPolygon(); 	break;
             case R.id.btnMapPath		  : 	drawMapPath();			break;
             case R.id.btnRemoveMapPath    :     removeMapPath(); 		break;
-            case R.id.btnDisplayMapInfo   :     displayMapInfo(); 		break;
-            case R.id.btnNaviGuide		  :     naviGuide();			break;
-            case R.id.btnCarPath		  :     drawCarPath(); 			break;
-            case R.id.btnPedestrian_Path  :     drawPedestrianPath();   break;
-            case R.id.btnBicycle_Path     :     drawBicyclePath(); 	    break;
             case R.id.btnGetCenterPoint   :     getCenterPoint();		break;
-            /*
-            case R.id.btnFindAllPoi		  :     findAllPoi();			break;
-            case R.id.btnConvertToAddress :     convertToAddress(); 	break;
-            case R.id.btnGetBizCategory   : 	getBizCategory(); 		break;
-            case R.id.btnGetAroundBizPoi  :     getAroundBizPoi(); 		break;
-            case R.id.btnTileType		  : 	setTileType();			break;
-            case R.id.btnInvokeRoute	  :     invokeRoute();			break;
-            case R.id.btnInvokeSetLocation: 	invokeSetLocation();    break;
-            case R.id.btnInvokeSearchPortal: 	invokeSearchProtal(); 	break;
-            case R.id.btnBicycle		  :     setBicycle();		    break;
-            case R.id.btnBicycleFacility  : 	setBicycleFacility();   break;
-            */
             case R.id.btnCapture		  :     captureImage(); 		break;
             case R.id.btnDisalbeZoom	  : 	disableZoom();			break;
             case R.id.btnTimeMachine	  :   	timeMachine(); 			break;
-            //case R.id.btnTMapInstall	  :     tmapInstall(); 			break;
-            case R.id.btnMarkerPoint2	  :     showMarkerPoint2(); 	break;
         }
     }
     // 랜덤한 위치 찍어주는
@@ -549,7 +493,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         m_bShowMapIcon = true;
 
         if (m_bShowMapIcon) {
-            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.i_location);
+            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.my_location);
             mMapView.setIcon(bitmap);
         }
         mMapView.setIconVisibility(m_bShowMapIcon);
@@ -901,8 +845,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     }
 
     // 경로 그리는 함수
-    public void drawCashPath(TMapPoint point2) {
-        TMapPoint point1 = mMapView.getLocationPoint();
+    public void drawCashPath(TMapPoint point1, TMapPoint point2) {
         TMapData tmapdata = new TMapData();
 
         tmapdata.findPathDataWithType(TMapPathType.PEDESTRIAN_PATH, point1, point2, new FindPathDataListenerCallback() {
@@ -1157,6 +1100,14 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void findGoal(TMapPoint start, TMapPoint end)
     {
 
+    }
+
+    //도착 확인을 위한 함수
+    public void checkArrive(TMapPoint point1, TMapPoint point2)
+    {
+        double distance = MapUtils.getDistance(point1,point2);
+        if(distance <= radius)
+        checkGoal =  true;
     }
 
 }
