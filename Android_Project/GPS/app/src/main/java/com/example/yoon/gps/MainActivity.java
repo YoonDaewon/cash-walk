@@ -144,10 +144,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
     };
 
     @Override
@@ -165,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
         if (id == R.id.action_settings) {
             return true;
         }

@@ -1,10 +1,13 @@
 package com.example.yoon.cashwalknm;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +21,7 @@ import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
+import com.nhn.android.maps.NMapView.OnMapStateChangeListener;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
@@ -52,7 +56,7 @@ public class MainActivity extends NMapActivity {
     private static final String KEY_BICYCLE_MODE = "NMapViewer.bicycleMode";
 
     private static final NGeoPoint NMAP_LOCATION_DEFAULT = new NGeoPoint(126.978371, 37.5666091);
-    private static final int NMAP_ZOOMLEVEL_DEFAULT = 11;
+    private static final int NMAP_ZOOMLEVEL_DEFAULT = 16;
     private static final int NMAP_VIEW_MODE_DEFAULT = NMapView.VIEW_MODE_VECTOR;
     private static final boolean NMAP_TRAFFIC_MODE_DEFAULT = false;
     private static final boolean NMAP_BICYCLE_MODE_DEFAULT = false;
@@ -66,6 +70,10 @@ public class MainActivity extends NMapActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 권한 설정
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        checkLocationPermission();
 
         if(USE_XML_LAYOUT){
             setContentView(R.layout.activity_main);
@@ -136,12 +144,26 @@ public class MainActivity extends NMapActivity {
     @Override
     protected void onStart() {
         super.onStart();
+<<<<<<< HEAD
         testPOIdataOverlay();
         //mOverlayManager.clearOverlays();
         //testFloatingPOIdataOverlay();
 
 
 
+=======
+        startMyLocation();
+        if (mMapView.getMapProjection().isProjectionScaled()) {
+            if (mMapView.getMapProjection().isMapHD()) {
+                mMapView.setScalingFactor(2.0F, false);
+            } else {
+                mMapView.setScalingFactor(1.0F, false);
+            }
+        } else {
+            mMapView.setScalingFactor(2.0F, true);
+        }
+        mIsMapEnlared = mMapView.getMapProjection().isProjectionScaled();
+>>>>>>> 8dd0b1bb7bfbbac1a5571910ea047cbb0995bb9d
     }
     @Override
     protected void onResume() {
@@ -295,7 +317,6 @@ public class MainActivity extends NMapActivity {
 
 
     private void startMyLocation() {
-
         if (mMyLocationOverlay != null) {
             if (!mOverlayManager.hasOverlay(mMyLocationOverlay)) {
                 mOverlayManager.addOverlay(mMyLocationOverlay);
@@ -436,6 +457,7 @@ public class MainActivity extends NMapActivity {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
+<<<<<<< HEAD
     private void testPOIdataOverlay() {
 
         // Markers for POI item
@@ -542,5 +564,13 @@ public class MainActivity extends NMapActivity {
     };
     public void Onclicklistenr ()
 
+=======
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
+    }
+>>>>>>> 8dd0b1bb7bfbbac1a5571910ea047cbb0995bb9d
 }
 

@@ -2,7 +2,6 @@ package jaewon.markertest;
 
 
 import android.app.Activity;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,14 +18,14 @@ public class MainActivity extends Activity {
 
     static final LatLng SEOUL = new LatLng (37.56,126.97);
     private GoogleMap map;
-    private SensorManager mSensorManager;
+
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         map = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
         //Marker seoul = map.addMarker(new MarkerOptions().position(SEOUL).title("Seoul"));
-        startLocationService();
+
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 15));
 
 
@@ -49,5 +48,4 @@ public class MainActivity extends Activity {
 
 
 }
-
 
