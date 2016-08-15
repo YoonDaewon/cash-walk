@@ -87,8 +87,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     private TMapView		mMapView = null;
     private Context 		mContext;
-    private ArrayList<Bitmap> mOverlayList;
-    private ImageOverlay mOverlay;
 
     public static String mApiKey = "fd2bf1cd-1485-32b5-bc18-07ccd152aef6"; // 발급받은 appKey
     public static String mBizAppID; // 발급받은 BizAppID (TMapTapi로 TMap앱 연동을 할 때 BizAppID 꼭 필요)
@@ -354,9 +352,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     protected void onDestroy() {
         super.onDestroy();
         gps.CloseGps();
-        if(mOverlayList != null){
-            mOverlayList.clear();
-        }
     }
 
     /**
@@ -380,9 +375,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             case R.id.btnMapPath		  : 	drawMapPath();			break;
             case R.id.btnRemoveMapPath    :     removeMapPath(); 		break;
             case R.id.btnGetCenterPoint   :     getCenterPoint();		break;
-            case R.id.btnCapture		  :     captureImage(); 		break;
             case R.id.btnDisalbeZoom	  : 	disableZoom();			break;
-            case R.id.btnTimeMachine	  :   	timeMachine(); 			break;
         }
     }
     // 랜덤한 위치 찍어주는
@@ -401,29 +394,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         TMapPoint point = new TMapPoint(latitude, longitude);
 
         return point;
-    }
-    public Bitmap overlayMark(Bitmap bmp1, Bitmap bmp2, int width, int height) {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-
-        int marginLeft = 7;
-        int marginTop = 5;
-
-        if(width >= 1500 || height > 1500) {
-            bmp2 = Bitmap.createScaledBitmap(bmp2, bmp1.getWidth() - 40, bmp1.getHeight() - 50, true);
-            marginLeft = 20;
-            marginTop = 10;
-        } else if(width >= 1200 || height > 1200) {
-            bmp2 = Bitmap.createScaledBitmap(bmp2, bmp1.getWidth() - 22, bmp1.getHeight() - 35, true);
-            marginLeft = 11;
-            marginTop = 7;
-        } else {
-            bmp2 = Bitmap.createScaledBitmap(bmp2, bmp1.getWidth() - 15, bmp1.getHeight() - 25, true);
-        }
-
-        Canvas canvas = new Canvas(bmOverlay);
-        canvas.drawBitmap(bmp1, 0, 0, null);
-        canvas.drawBitmap(bmp2, marginLeft, marginTop, null);
-        return bmOverlay;
     }
 
     /**
@@ -564,163 +534,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         Common.showAlertDialog(this, "", "현재 트래킹모드 사용 여부  : " + bIsTracking.toString() );
     }
 
-    public void showMarkerPoint2() {
-        ArrayList<Bitmap> list = null;
-        for(int i = 0; i < 50; i++) {
-
-            MarkerOverlay marker1 = new MarkerOverlay(this, mMapView);
-            String strID = String.format("%02d", i);
-
-            marker1.setID(strID);
-            marker1.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.map_pin_red));
-            marker1.setTMapPoint(randomTMapPoint());
-
-            if (list == null) {
-                list = new ArrayList<Bitmap>();
-            }
-
-            list.add(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.map_pin_red));
-            list.add(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.end));
-
-            marker1.setAnimationIcons(list);
-            mMapView.addMarkerItem2(strID, marker1);
-        }
-
-        mMapView.setOnMarkerClickEvent(new TMapView.OnCalloutMarker2ClickCallback() {
-
-            @Override
-            public void onCalloutMarker2ClickEvent(String id, TMapMarkerItem2 markerItem2) {
-                LogManager.printLog("ClickEvent " + " id " + id + " " + markerItem2.latitude + " " +  markerItem2.longitude);
-
-                String strMessage = "ClickEvent " + " id " + id + " " + markerItem2.latitude + " " +  markerItem2.longitude;
-
-                Common.showAlertDialog(MainActivity.this, "TMapMarker2", strMessage);
-            }
-        });
-    }
-
-    /**
-     * showMarkerPoint
-     * 지도에 마커를 표출한다.
-     */
-    public void showMarkerPoint() {
-        Bitmap bitmap = null;
-
-        TMapPoint point = new TMapPoint(37.566474, 126.985022);
-
-        TMapMarkerItem item1 = new TMapMarkerItem();
-
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.i_location);
-
-        item1.setTMapPoint(point);
-        item1.setName("SKT타워");
-        item1.setVisible(item1.VISIBLE);
-
-        item1.setIcon(bitmap);
-        LogManager.printLog("bitmap " + bitmap.getWidth() + " " + bitmap.getHeight());
-
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.i_location);
-        item1.setCalloutTitle("SKT타워");
-        item1.setCalloutSubTitle("을지로입구역 500M");
-        item1.setCanShowCallout(true);
-        item1.setAutoCalloutVisible(true);
-
-        Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.i_go);
-
-        item1.setCalloutRightButtonImage(bitmap_i);
-
-        String strID = String.format("pmarker%d", mMarkerID++);
-
-        mMapView.addMarkerItem(strID, item1);
-        mArrayMarkerID.add(strID);
-
-
-        point = new TMapPoint(37.55102510077652, 126.98789834976196);
-        TMapMarkerItem item2 = new TMapMarkerItem();
-
-        item2.setTMapPoint(point);
-        item2.setName("N서울타워");
-        item2.setVisible(item2.VISIBLE);
-        item2.setCalloutTitle("청호타워 4층");
-
-        item2.setCanShowCallout(true);
-
-        bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.i_go);
-        item2.setCalloutRightButtonImage(bitmap_i);
-
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.pin_tevent);
-        item2.setIcon(bitmap);
-
-        strID = String.format("pmarker%d", mMarkerID++);
-
-        mMapView.addMarkerItem(strID, item2);
-        mArrayMarkerID.add(strID);
-
-
-        point = new TMapPoint(37.58102510077652, 126.98789834976196);
-        item2 = new TMapMarkerItem();
-
-        item2.setTMapPoint(point);
-        item2.setName("N서울타워");
-        item2.setVisible(item2.VISIBLE);
-        item2.setCalloutTitle("창덕궁 청호타워 4층");
-
-        item2.setCalloutSubTitle("을지로입구역 500M");
-        item2.setCanShowCallout(true);
-
-
-        bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.i_go);
-        item2.setCalloutRightButtonImage(bitmap_i);
-
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.map_pin_red);
-        item2.setIcon(bitmap);
-
-        strID = String.format("pmarker%d", mMarkerID++);
-
-        mMapView.addMarkerItem(strID, item2);
-        mArrayMarkerID.add(strID);
-
-        point = new TMapPoint(37.58102510077652, 126.99789834976196);
-        item2 = new TMapMarkerItem();
-
-        item2.setTMapPoint(point);
-        item2.setName("N서울타워");
-        item2.setVisible(item2.VISIBLE);
-        item2.setCalloutTitle("대학로 혜화역111111");
-
-        item2.setCanShowCallout(true);
-
-        item2.setCalloutLeftImage(bitmap);
-
-        bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.i_go);
-        item2.setCalloutRightButtonImage(bitmap_i);
-
-
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.end);
-        item2.setIcon(bitmap);
-
-        strID = String.format("pmarker%d", mMarkerID++);
-
-        mMapView.addMarkerItem(strID, item2);
-        mArrayMarkerID.add(strID);
-
-        for(int i = 4; i < 10; i++) {
-            TMapMarkerItem item3 = new TMapMarkerItem();
-
-            item3.setID(strID);
-            item3.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.map_pin_red));
-
-            item3.setTMapPoint(randomTMapPoint());
-            item3.setCalloutTitle(">>>>" + strID + "<<<<<");
-            item3.setCanShowCallout(true);
-
-            strID = String.format("pmarker%d", mMarkerID++);
-
-            mMapView.addMarkerItem(strID, item2);
-            mArrayMarkerID.add(strID);
-        }
-    }
-
     public void removeMarker() {
         if(mArrayMarkerID.size() <= 0 )
             return;
@@ -728,26 +541,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         String strMarkerID = mArrayMarkerID.get(mArrayMarkerID.size() - 1);
         mMapView.removeMarkerItem(strMarkerID);
         mArrayMarkerID.remove(mArrayMarkerID.size() - 1);
-    }
-
-    /**
-     * moveFrontMarker
-     * 마커를 맨 앞으로 표시 하도록 한다.
-     * showMarkerPoint() 함수를 먼저 클릭을 한 후, 클릭을 해야 함.
-     */
-    public void moveFrontMarker() {
-        TMapMarkerItem item = mMapView.getMarkerItemFromID("1");
-        mMapView.bringMarkerToFront(item);
-    }
-
-    /**
-     * moveBackMarker
-     * 마커를 맨 뒤에 표시하도록 한다.
-     * showMarkerPoint() 함수를 먼저 클릭을 한 후, 클릭을 해야 함.
-     */
-    public void moveBackMarker() {
-        TMapMarkerItem item = mMapView.getMarkerItemFromID("1");
-        mMapView.sendMarkerToBack(item);
     }
 
     /**
@@ -769,45 +562,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         });
     }
 
-    private String getContentFromNode(Element item, String tagName){
-        NodeList list = item.getElementsByTagName(tagName);
-        if (list.getLength() > 0) {
-            if (list.item(0).getFirstChild() != null) {
-                return list.item(0).getFirstChild().getNodeValue();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * displayMapInfo()
-     * POI들이 모두 표시될 수 있는 줌레벨 결정함수와 중심점리턴하는 함수
-     */
-    public void displayMapInfo() {
-		/*
-		TMapPoint point1 = mMapView.getCenterPoint();
-		TMapPoint point2 = randomTMapPoint();
-		*/
-        TMapPoint point1 = new TMapPoint(37.541642248630524, 126.99599611759186);
-        TMapPoint point2 = new TMapPoint(37.541243493556976, 126.99659830331802);
-        TMapPoint point3 = new TMapPoint(37.540909826755524, 126.99739581346512);
-        TMapPoint point4 = new TMapPoint(37.541080713272095, 126.99874675273895);
-
-        ArrayList<TMapPoint> point = new ArrayList<TMapPoint>();
-
-        point.add(point1);
-        point.add(point2);
-        point.add(point3);
-        point.add(point4);
-
-        TMapInfo info = mMapView.getDisplayTMapInfo(point);
-
-        String strInfo = "Center Latitude" + info.getTMapPoint().getLatitude() + "Center Longitude" + info.getTMapPoint().getLongitude() +
-                "Level " + info.getTMapZoomLevel();
-
-        Common.showAlertDialog(this, "", strInfo );
-    }
-
     /**
      * removeMapPath
      * 경로 표시를 삭제한다.
@@ -815,54 +569,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void removeMapPath() {
         mMapView.removeTMapPath();
 
-    }
-
-    /**
-     * naviGuide
-     * 길안내
-     */
-    public void naviGuide() {
-        TMapPoint point1 = mMapView.getCenterPoint();
-        TMapPoint point2 = randomTMapPoint();
-
-        TMapData tmapdata = new TMapData();
-
-        tmapdata.findPathDataAll(point1, point2, new FindPathDataAllListenerCallback() {
-            @Override
-            public void onFindPathDataAll(Document doc) {
-                LogManager.printLog("onFindPathDataAll: " + doc);
-            }
-        });
-    }
-
-    public void drawCarPath() {
-
-        TMapPoint point1 = mMapView.getCenterPoint();
-        TMapPoint point2 = randomTMapPoint();
-
-        TMapData tmapdata = new TMapData();
-
-        tmapdata.findPathDataWithType(TMapPathType.CAR_PATH, point1, point2, new FindPathDataListenerCallback() {
-            @Override
-            public void onFindPathData(TMapPolyLine polyLine) {
-                mMapView.addTMapPath(polyLine);
-            }
-        });
-    }
-
-    public void drawPedestrianPath() {
-        TMapPoint point1 = mMapView.getCenterPoint();
-        TMapPoint point2 = randomTMapPoint();
-
-        TMapData tmapdata = new TMapData();
-
-        tmapdata.findPathDataWithType(TMapPathType.PEDESTRIAN_PATH, point1, point2, new FindPathDataListenerCallback() {
-            @Override
-            public void onFindPathData(TMapPolyLine polyLine) {
-                polyLine.setLineColor(Color.BLUE);
-                mMapView.addTMapPath(polyLine);
-            }
-        });
     }
 
     // 경로 그리는 함수
@@ -878,20 +584,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         });
     }
 
-    public void drawBicyclePath() {
-        TMapPoint point1 = mMapView.getCenterPoint();
-        TMapPoint point2 = randomTMapPoint();
-
-        TMapData tmapdata = new TMapData();
-
-        tmapdata.findPathDataWithType(TMapPathType.BICYCLE_PATH, point1, point2, new FindPathDataListenerCallback() {
-            @Override
-            public void onFindPathData(TMapPolyLine polyLine) {
-                mMapView.addTMapPath(polyLine);
-            }
-        });
-    }
-
     /**
      * getCenterPoint
      * 지도의 중심점을 가지고 온다.
@@ -902,204 +594,11 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         Common.showAlertDialog(this, "", "지도의 중심 좌표는 " + point.getLatitude() + " " + point.getLongitude() );
     }
 
-    /**
-     * findAllPoi
-     * 통합검색 POI를 요청한다.
-     */
-    public void findAllPoi() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("POI 통합 검색");
-
-        final EditText input = new EditText(this);
-        builder.setView(input);
-
-        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final String strData = input.getText().toString();
-                TMapData tmapdata = new TMapData();
-
-                tmapdata.findAllPOI(strData, new FindAllPOIListenerCallback() {
-                    @Override
-                    public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
-                        for (int i = 0; i < poiItem.size(); i++) {
-                            TMapPOIItem  item = poiItem.get(i);
-
-                            LogManager.printLog("POI Name: " + item.getPOIName().toString() + ", " +
-                                    "Address: " + item.getPOIAddress().replace("null", "")  + ", " +
-                                    "Point: " + item.getPOIPoint().toString());
-                        }
-                    }
-                });
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-
-    }
-
-
-    /**
-     * convertToAddress
-     * 지도에서 선택한 지점을 주소를 변경요청한다.
-     */
-    public void convertToAddress() {
-        TMapPoint point = mMapView.getCenterPoint();
-
-        TMapData tmapdata = new TMapData();
-
-        if (mMapView.isValidTMapPoint(point)) {
-            tmapdata.convertGpsToAddress(point.getLatitude(), point.getLongitude(), new ConvertGPSToAddressListenerCallback() {
-                @Override
-                public void onConvertToGPSToAddress(String strAddress) {
-                    LogManager.printLog("선택한 위치의 주소는 " + strAddress);
-                }
-            });
-
-//		    tmapdata.geoCodingWithAddressType("F02", "서울시", "구로구", "새말로", "6", "", new GeoCodingWithAddressTypeListenerCallback() {
-//
-//				@Override
-//				public void onGeoCodingWithAddressType(TMapGeocodingInfo geocodingInfo) {
-//					LogManager.printLog(">>> strMatchFlag : " + geocodingInfo.strMatchFlag);
-//					LogManager.printLog(">>> strLatitude : " + geocodingInfo.strLatitude);
-//					LogManager.printLog(">>> strLongitude : " + geocodingInfo.strLongitude);
-//					LogManager.printLog(">>> strCity_do : " + geocodingInfo.strCity_do);
-//					LogManager.printLog(">>> strGu_gun : " + geocodingInfo.strGu_gun);
-//					LogManager.printLog(">>> strLegalDong : " + geocodingInfo.strLegalDong);
-//					LogManager.printLog(">>> strAdminDong : " + geocodingInfo.strAdminDong);
-//					LogManager.printLog(">>> strBunji : " + geocodingInfo.strBunji);
-//					LogManager.printLog(">>> strNewMatchFlag : " + geocodingInfo.strNewMatchFlag);
-//					LogManager.printLog(">>> strNewLatitude : " + geocodingInfo.strNewLatitude);
-//					LogManager.printLog(">>> strNewLongitude : " + geocodingInfo.strNewLongitude);
-//					LogManager.printLog(">>> strNewRoadName : " + geocodingInfo.strNewRoadName);
-//					LogManager.printLog(">>> strNewBuildingIndex : " + geocodingInfo.strNewBuildingIndex);
-//					LogManager.printLog(">>> strNewBuildingName : " + geocodingInfo.strNewBuildingName);
-//				}
-//			});
-        }
-    }
-
-    public void invokeRoute() {
-        final TMapPoint point = mMapView.getCenterPoint();
-        TMapData tmapdata = new TMapData();
-
-        if(mMapView.isValidTMapPoint(point)) {
-            tmapdata.convertGpsToAddress(point.getLatitude(), point.getLongitude(), new ConvertGPSToAddressListenerCallback() {
-                @Override
-                public void onConvertToGPSToAddress(String strAddress) {
-                    TMapTapi tmaptapi = new TMapTapi(MainActivity.this);
-                    float fY = (float)point.getLatitude();
-                    float fX = (float)point.getLongitude();
-                    tmaptapi.invokeRoute(strAddress, fX, fY);
-                }
-            });
-        }
-    }
-
-    public void invokeSetLocation() {
-        final TMapPoint point = mMapView.getCenterPoint();
-        TMapData tmapdata = new TMapData();
-
-        tmapdata.convertGpsToAddress(point.getLatitude(), point.getLongitude(), new ConvertGPSToAddressListenerCallback() {
-            @Override
-            public void onConvertToGPSToAddress(String strAddress) {
-                TMapTapi tmaptapi = new TMapTapi(MainActivity.this);
-                float fY = (float) point.getLatitude();
-                float fX = (float) point.getLongitude();
-                tmaptapi.invokeSetLocation(strAddress, fX, fY);
-            }
-        });
-    }
-
-    public void invokeSearchProtal() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("T MAP 통합 검색");
-
-        final EditText input = new EditText(this);
-        builder.setView(input);
-
-        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final String strSearch = input.getText().toString();
-
-                new Thread() {
-                    @Override
-                    public void run() {
-                        TMapTapi tmaptapi = new TMapTapi(MainActivity.this);
-                        if (strSearch.trim().length() > 0)
-                            tmaptapi.invokeSearchPortal(strSearch);
-                    }
-                }.start();
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
-    public void captureImage() {
-        mMapView.getCaptureImage(20, new MapCaptureImageListenerCallback() {
-
-            @Override
-            public void onMapCaptureImage(Bitmap bitmap) {
-
-                String sdcard = Environment.getExternalStorageDirectory().getAbsolutePath();
-
-                File path = new File(sdcard + File.separator + "image_write");
-                if (!path.exists())
-                    path.mkdir();
-
-                File fileCacheItem = new File(path.toString() + File.separator + System.currentTimeMillis() + ".png");
-                OutputStream out = null;
-
-                try {
-                    fileCacheItem.createNewFile();
-                    out = new FileOutputStream(fileCacheItem);
-
-                    bitmap.compress(CompressFormat.JPEG, 90, out);
-
-                    out.flush();
-                    out.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     private boolean bZoomEnable = false;
 
     public void disableZoom() {
         bZoomEnable = !bZoomEnable;
         mMapView.setUserScrollZoomEnable(bZoomEnable);
-    }
-
-    public void timeMachine() {
-        TMapData tmapdata = new TMapData();
-
-        HashMap<String, String> pathInfo = new HashMap<String, String>();
-        pathInfo.put("rStName", "T Tower");
-        pathInfo.put("rStlat", Double.toString(37.566474));
-        pathInfo.put("rStlon", Double.toString(126.985022));
-        pathInfo.put("rGoName", "신도림");
-        pathInfo.put("rGolat", "37.50861147");
-        pathInfo.put("rGolon", "126.8911457");
-        pathInfo.put("type", "arrival");
-
-        Date currentTime = new Date();
-        tmapdata.findTimeMachineCarPath(pathInfo,  currentTime, null);
     }
 
     // 권한 체크 위한 함수
@@ -1115,12 +614,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         String permission = "android.permission.ACCESS_COARSE_LOCATION";
         int res = this.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
-    }
-
-    // 목적지 설정 후, 길 찾기 위한 함수
-    public void findGoal(TMapPoint start, TMapPoint end)
-    {
-
     }
 
     //도착 확인을 위한 함수
