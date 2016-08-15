@@ -262,6 +262,9 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             @Override
             public boolean onPressUpEvent(ArrayList<TMapMarkerItem> markerlist,ArrayList<TMapPOIItem> poilist, TMapPoint point, PointF pointf) {
                 LogManager.printLog("MainActivity onPressUpEvent " + markerlist.size());
+                String strID = "목적지";
+                String strMessage = "";
+                Common.showAlertDialog(MainActivity.this, "여기가 바로", strID);
                 return false;
             }
 
@@ -406,42 +409,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         return point;
     }
-
-    public void overlay() {
-        m_bOverlayMode = !m_bOverlayMode;
-        if(m_bOverlayMode) {
-            mMapView.setZoomLevel(6);
-
-            if(mOverlay == null){
-                mOverlay = new ImageOverlay(this, mMapView);
-            }
-
-            mOverlay.setLeftTopPoint(new TMapPoint(45.640171, 114.9652948));
-            mOverlay.setRightBottomPoint(new TMapPoint(29.2267177, 138.7206798));
-            mOverlay.setImage(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.test_image));
-
-            if(mOverlayList == null){
-                mOverlayList = new ArrayList<Bitmap>();
-                mOverlayList.add(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.test_image));
-                mOverlayList.add(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ani1));
-                mOverlayList.add(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ani2));
-            }
-
-            mOverlay.setAnimationIcons(mOverlayList);
-            mOverlay.setAniDuration(10000);
-            mOverlay.startAnimation();
-            mMapView.addTMapOverlayID(0, mOverlay);
-        } else {
-            mOverlay.stopAnimation();
-            mMapView.removeTMapOverlayID(0);
-        }
-    }
-
-    public void animateTo() {
-        TMapPoint point = randomTMapPoint();
-        mMapView.setCenterPoint(point.getLongitude(), point.getLatitude(), true);
-    }
-
     public Bitmap overlayMark(Bitmap bmp1, Bitmap bmp2, int width, int height) {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
 
@@ -511,24 +478,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     }
 
     /**
-     * seetMapType
-     * Map의 Type을 설정한다.
-     */
-    public void setMapType() {
-        AlertDialog dlg = new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_launcher)
-                .setTitle("Select MAP Type")
-                .setSingleChoiceItems(R.array.a_maptype, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
-                        LogManager.printLog("Set Map Type " + item);
-                        dialog.dismiss();
-                        mMapView.setMapType(item);
-                    }
-                }).show();
-    }
-
-    /**
      * getLocationPoint
      * 현재위치로 표시될 좌표의 위도, 경도를 반환한다.
      */
@@ -593,15 +542,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void getIsCompass() {
         Boolean bGetIsCompass = mMapView.getIsCompass();
         Common.showAlertDialog(this, "", "현재 나침반 모드는 : " + bGetIsCompass.toString() );
-    }
-
-    /**
-     * setTrafficeInfo
-     * 실시간 교통정보를 표출여부를 설정한다.
-     */
-    public void setTrafficeInfo() {
-        m_bTrafficeMode = !m_bTrafficeMode;
-        mMapView.setTrafficInfo(m_bTrafficeMode);
     }
 
     /**
@@ -1004,6 +944,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
      */
     public void removeMapPath() {
         mMapView.removeTMapPath();
+
     }
 
     /**
