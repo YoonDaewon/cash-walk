@@ -673,16 +673,4 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         Toast.makeText(this,"남은 거리 :" + strid + " m", Toast.LENGTH_LONG).show();
     }
 
-    // 길안내 함수
-    public void naviGuide(TMapPoint point1, TMapPoint point2) {
-        TMapData tmapdata = new TMapData();
-
-        tmapdata.findPathDataAll(point1, point2, new FindPathDataAllListenerCallback() {
-            @Override
-            public void onFindPathDataAll(Document doc) {
-                LogManager.printLog("onFindPathDataAll: " + doc);
-            }
-        });
-    }
-
 }
