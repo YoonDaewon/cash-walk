@@ -77,19 +77,17 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         if(m_bTrackingMode) {
             mMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         }
-        if(drawPath)
-        {
-            drawCashPath(s_Point, g_Point);
+        TMapPoint m_point = mMapView.getLocationPoint();
+        checkArrive(m_point,g_Point);
+        if(checkGoal){
+            // 변수 설정
+            kcal = (weight*g_Distance)/1000;
+            String value1 = String.format("%.0f", kcal);
+            String value2 = String.format("%.0f", g_Distance);
 
-            TMapPoint m_point = mMapView.getLocationPoint();
-
-            checkArrive(m_point,g_Point);
-            if(checkGoal){
-                String strMessage = "적립되었습니다.\n소모 칼로리 : \n총 이동거리 : \n소요시간 : ";
-                Common.showAlertDialog(MainActivity.this, " ", strMessage);
-                checkGoal = false;
-                drawPath = false;
-            }
+            String strMessage = "적립되었습니다.\n소모 칼로리 : " + value1 + "\n총 이동거리 : " + value2 + "\n소요시간 : ";
+            Common.showAlertDialog(MainActivity.this, " ", strMessage);
+            checkGoal = false;
         }
     }
 
@@ -97,7 +95,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private TMapView		mMapView = null;
     private Context 		mContext;
 
-    public static String mApiKey = "fd2bf1cd-1485-32b5-bc18-07ccd152aef6"; // 발급받은 appKey
+    public static String mApiKey = "ffe26ff2-23c0-306d-8b07-337866842f14"; // 발급받은 appKey
     public static String mBizAppID; // 발급받은 BizAppID (TMapTapi로 TMap앱 연동을 할 때 BizAppID 꼭 필요)
 
     private static final int[] mArrayMapButton = {
@@ -127,12 +125,17 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private TMapPoint g_Point;
 
     // 도착 알람을 위한 오차범위 설정
-    private double radius = 100;
+    private double radius = 20;
 
     // 노래 재생을 위한 전역변수 설정
     private SoundPool mSoundPool;
     private int streamid;
     private int soundid;
+
+    // 칼로리 계산 및 거리 계산을 위한 전역 변수
+    private double g_Distance = 0;
+    private double weight = 70;
+    private double kcal = 0;
 
     private 	boolean 	m_bShowMapIcon = true;    // 자기 위치 아이콘 표시
 
@@ -256,6 +259,9 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         soundid = mSoundPool.load(this, R.raw.track1,1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+
+
+        Toast.makeText(this,"목적지를 길게 클릭하세요", Toast.LENGTH_LONG).show();
     }
     /**
      * setSKPMapApiKey()에 ApiKey를 입력 한다.
@@ -307,10 +313,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             public boolean onPressUpEvent(ArrayList<TMapMarkerItem> markerlist,ArrayList<TMapPOIItem> poilist, TMapPoint point, PointF pointf) {
                 LogManager.printLog("MainActivity onPressUpEvent " + markerlist.size());
 
-                if(drawPath)
-                {
-                    drawCashPath(s_Point, g_Point);
-                }
                 return false;
             }
 
@@ -340,10 +342,16 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
                 double Distance = MapUtils.getDistance(s_Point,g_Point);
 
+                // 출력을 위한 변수값들 설정
+                g_Distance = Distance;
+
                 String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
 
                 // 경로 그리는 트리거 on
-                drawPath = true;
+                // drawPath = true;
+
+                // 롱 클릭 리스너에서 경로는 바로 그림
+                drawCashPath(s_Point,g_Point);
 
                 Common.showAlertDialog(MainActivity.this, " ", strResult);
             }
@@ -658,7 +666,23 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     {
         double distance = MapUtils.getDistance(point1,point2);
         if(distance <= radius)
-        checkGoal =  true;
+            checkGoal =  true;
+
+
+        String strid = String.format("%.0f",distance);
+        Toast.makeText(this,"남은 거리 :" + strid + " m", Toast.LENGTH_LONG).show();
+    }
+
+    // 길안내 함수
+    public void naviGuide(TMapPoint point1, TMapPoint point2) {
+        TMapData tmapdata = new TMapData();
+
+        tmapdata.findPathDataAll(point1, point2, new FindPathDataAllListenerCallback() {
+            @Override
+            public void onFindPathDataAll(Document doc) {
+                LogManager.printLog("onFindPathDataAll: " + doc);
+            }
+        });
     }
 
 }
