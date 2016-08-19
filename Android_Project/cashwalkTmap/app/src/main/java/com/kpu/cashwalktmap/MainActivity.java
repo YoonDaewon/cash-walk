@@ -77,10 +77,13 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         if(m_bTrackingMode) {
             mMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         }
+        // 현재 포인트를 가져와서 거리 측적용으로 저장
         TMapPoint m_point = mMapView.getLocationPoint();
+        // 목적지 반경 안에 들어갔나 확인하는 함수
         checkArrive(m_point,g_Point);
+        // 목적지 반경 안에 들어가면 checkGoal 변수를 true로 반환
         if(checkGoal){
-            // 변수 설정
+            // 목적지에 도착하면 칼로리 및 거리를 계산
             kcal = (weight*g_Distance)/1000;
             String value1 = String.format("%.0f", kcal);
             String value2 = String.format("%.0f", g_Distance);
@@ -91,12 +94,10 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         }
     }
 
-
     private TMapView		mMapView = null;
     private Context 		mContext;
 
     public static String mApiKey = "ffe26ff2-23c0-306d-8b07-337866842f14"; // 발급받은 appKey
-    public static String mBizAppID; // 발급받은 BizAppID (TMapTapi로 TMap앱 연동을 할 때 BizAppID 꼭 필요)
 
     private static final int[] mArrayMapButton = {
 
@@ -115,12 +116,12 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private 	int 		m_nCurrentZoomLevel = 0;
     private 	double 		m_Latitude  = 0;
     private     double  	m_Longitude = 0;
+
     // 목적지 좌표 저장 위한
     private double g_Latitude = 0;
     private double g_Longitude = 0;
 
     // 현재 위치와 목표 위치를 저장하기 위한point 변수
-
     private TMapPoint s_Point;
     private TMapPoint g_Point;
 
@@ -142,8 +143,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private 	boolean 	checkGoal = false;
     private 	boolean 	m_bSightVisible = false;
     private 	boolean 	m_bTrackingMode = true;   // 추적 모드 on
-    private    boolean   drawPath = false;
-    private    boolean    m_bOverlayMode = false;
 
     ArrayList<String>      mArrayID;
 
@@ -168,7 +167,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 권한 설정
+        // 권한 설정 - 재설정 필요 GPS 자동으로 켜지게 설정해야함
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         checkLocationPermission1();
@@ -237,6 +236,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         gps = new TMapGpsManager(MainActivity.this);
 
+        // GPS 갱신 옵션 설정
         gps.setMinTime(500);
         gps.setMinDistance(5);
         gps.setProvider(gps.GPS_PROVIDER);
@@ -345,10 +345,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
                 // 출력을 위한 변수값들 설정
                 g_Distance = Distance;
 
-                String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
-
-                // 경로 그리는 트리거 on
-                // drawPath = true;
+                String strResult = String.format("목적지\n\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
 
                 // 롱 클릭 리스너에서 경로는 바로 그림
                 drawCashPath(s_Point,g_Point);
@@ -385,7 +382,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     @Override
     protected void onResume() {
         super.onResume();
-        streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+        //streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
 
     @Override
@@ -397,7 +394,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     protected void onStop() {
         super.onStop();
         // 화면 전환시 노래 종료
-        mSoundPool.stop(streamid);
+        //mSoundPool.stop(streamid);
     }
 
     @Override
@@ -472,7 +469,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void setZoomLevel() {
         final String[] arrString = getResources().getStringArray(R.array.a_zoomlevel);
         AlertDialog dlg = new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_launcher)
+                .setIcon(R.drawable.cashwalk_icon)
                 .setTitle("Select Zoom Level")
                 .setSingleChoiceItems(R.array.a_zoomlevel, m_nCurrentZoomLevel, new DialogInterface.OnClickListener() {
                     @Override
@@ -570,24 +567,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     }
 
     /**
-     * getIsTracking
-     * 트래킹모드의 사용여부를 반환한다.
-     */
-    public void getIsTracking() {
-        Boolean bIsTracking = mMapView.getIsTracking();
-        Common.showAlertDialog(this, "", "현재 트래킹모드 사용 여부  : " + bIsTracking.toString() );
-    }
-
-    public void removeMarker() {
-        if(mArrayMarkerID.size() <= 0 )
-            return;
-
-        String strMarkerID = mArrayMarkerID.get(mArrayMarkerID.size() - 1);
-        mMapView.removeMarkerItem(strMarkerID);
-        mArrayMarkerID.remove(mArrayMarkerID.size() - 1);
-    }
-
-    /**
      * drawMapPath
      * 지도에 시작-종료 점에 대해서 경로를 표시한다.
      */
@@ -666,11 +645,11 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     {
         double distance = MapUtils.getDistance(point1,point2);
         if(distance <= radius)
-            checkGoal =  true;
-
-
+        { checkGoal =  true;}
+        else{
         String strid = String.format("%.0f",distance);
         Toast.makeText(this,"남은 거리 :" + strid + " m", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
