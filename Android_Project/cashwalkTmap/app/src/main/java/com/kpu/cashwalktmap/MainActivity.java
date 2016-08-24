@@ -29,11 +29,13 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -70,6 +72,9 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     LinearLayout scrollMenu;
     boolean dragFlag = false;
     int width;
+
+    long timecheck = 0;
+
 
     @Override
     public void onLocationChange(Location location) {
@@ -170,11 +175,41 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         // 권한 설정
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         checkLocationPermission1();
         checkLocationPermission2();
 
         setContentView(R.layout.activity_main);
+
+
+        //chronometer타이머
+        final Chronometer chronometer = (Chronometer) findViewById(R.id.chronometer);
+        Button buttonStart = (Button) findViewById(R.id.buttonstart);
+        Button buttonStop = (Button) findViewById(R.id.buttonstop);
+        Button buttonReset = (Button) findViewById(R.id.buttonreset);
+        buttonStart.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                chronometer.start();
+
+            }
+        });
+
+        buttonStop.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                chronometer.stop();
+
+                //timecheck = chronometer.getBase();
+                //TimeShow();
+            }
+        });
+
+        buttonReset.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                chronometer.setBase(SystemClock.elapsedRealtime());
+            }
+        });
+
+
 
         DisplayMetrics dm = getApplication().getResources().getDisplayMetrics();
         width = dm.widthPixels; //사용하는 디스플레이의 넓이를 가지고온다.
@@ -256,12 +291,14 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         //Pool 생성
         mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         // 사운드 로드
-        soundid = mSoundPool.load(this, R.raw.track1,1);
+        soundid = mSoundPool.load(this, R.raw.track1, 1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
 
 
+
         Toast.makeText(this,"목적지를 길게 클릭하세요", Toast.LENGTH_LONG).show();
+
     }
     /**
      * setSKPMapApiKey()에 ApiKey를 입력 한다.
@@ -464,6 +501,15 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         int nCurrentZoomLevel = mMapView.getZoomLevel();
         Common.showAlertDialog(this, "", "현재 Zoom Level : " + Integer.toString(nCurrentZoomLevel));
     }
+
+
+    //저장한 시간을 보여주는 함수 Time
+    public  void TimeShow() {
+        String timestring = String.format("%f",timecheck);
+        Common.showAlertDialog(MainActivity.this ,"","hi" );
+
+    }
+
 
     /**
      * setZoomLevel
