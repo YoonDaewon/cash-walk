@@ -9,17 +9,25 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 /**
  * Created by ydwin on 2016-08-16.
  */
 public class TitleActivity extends AppCompatActivity {
     DB_Adapter cw_db;
+
+    // GCM 위한 변수 선언
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "TitleActivity";
 
     public static Activity activity;
 
@@ -29,6 +37,12 @@ public class TitleActivity extends AppCompatActivity {
         setContentView(R.layout.title_activity);
         activity = this;
         cw_db = new DB_Adapter(this);
+
+        // GCM 서비스 실행
+        if(checkPlayServices()){
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
     }
 
     @Override
@@ -69,14 +83,34 @@ public class TitleActivity extends AppCompatActivity {
 
         adb.setTitle("로그인");
         adb.setView(loginLayout);
-        adb.setNeutralButton("확인", new DialogInterface.OnClickListener() {
+        adb.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(
                         TitleActivity.this,"ID : " +
                                 id.getText().toString() + "\nPW : " +
                                 pw.getText().toString(), Toast.LENGTH_LONG).show();
+
+                // 디비 확인 후 데이터 없으면 insert
+
             }
         }).show();
+    }
+
+    // GCM서비스 확인을 위한 함수
+    private boolean checkPlayServices(){
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }

@@ -55,10 +55,6 @@ public class DB_Adapter {
             // db.execSQL( SQL_DELETE_TABLE);
         }
 
-
-
-
-
     }
 
     //
