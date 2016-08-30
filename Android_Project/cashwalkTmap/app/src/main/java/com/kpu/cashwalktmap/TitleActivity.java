@@ -25,6 +25,9 @@ import com.google.android.gms.common.GoogleApiAvailability;
 public class TitleActivity extends AppCompatActivity {
     DB_Adapter cw_db;
 
+    //통신위한 변수 선언
+    private NetworkService networkService;
+
     // GCM 위한 변수 선언
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "TitleActivity";
@@ -43,6 +46,12 @@ public class TitleActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+
+        // 서버와 통신 위한
+        // ip, port 연결, network 연결
+        ApplicationController application = ApplicationController.getInstance();
+        application.buildNetworkService("[ ip 주소 ]", 3000);
+        networkService = ApplicationController.getInstance().getNetworkService();
     }
 
     @Override
