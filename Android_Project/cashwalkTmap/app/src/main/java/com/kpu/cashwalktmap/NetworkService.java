@@ -12,12 +12,18 @@ import retrofit.http.Path;
  * Created by ydwin on 2016-08-30.
  */
 public interface NetworkService {
-    @POST("/Food")
+    @POST("/Data")
     Call<Data> post_food(@Body Data food);
 
-    @GET("/Food")
+    @GET("/Data")
     Call <List<Data>> getAllFood();
 
-    @GET("/Food/{name}")
-    Call <Data> getNameFood( @Path("name") String name );
+    @GET("/Data/{id}")
+    Call <Data> getNameFood( @Path("id") String name );
+
+    @GET("/users/{id}")
+    Call<Data> login(@Path("id") String userId);
+
+    @GET("/")
+    Call<Data> index();
 }

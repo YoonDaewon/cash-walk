@@ -19,17 +19,24 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 /**
  * Created by ydwin on 2016-08-16.
  */
 public class TitleActivity extends AppCompatActivity {
-    DB_Adapter cw_db;
 
     //통신위한 변수 선언
     private NetworkService networkService;
 
-    // GCM 위한 변수 선언
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "TitleActivity";
 
     public static Activity activity;
@@ -38,20 +45,13 @@ public class TitleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title_activity);
-        activity = this;
-        cw_db = new DB_Adapter(this);
-
-        // GCM 서비스 실행
-        if(checkPlayServices()){
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
 
         // 서버와 통신 위한
         // ip, port 연결, network 연결
         ApplicationController application = ApplicationController.getInstance();
-        application.buildNetworkService("[ ip 주소 ]", 3000);
-        networkService = ApplicationController.getInstance().getNetworkService();
+        Log.i(TAG, "application : " + application);
+        application.buildNetworkService(3000);
+        networkService = application.getNetworkService();
     }
 
     @Override
@@ -88,6 +88,8 @@ public class TitleActivity extends AppCompatActivity {
         final EditText id = (EditText)loginLayout.findViewById(R.id.id);
         final EditText pw = (EditText)loginLayout.findViewById(R.id.pw);
 
+
+
         AlertDialog.Builder adb =  new AlertDialog.Builder(this);
 
         adb.setTitle("로그인");
@@ -95,31 +97,77 @@ public class TitleActivity extends AppCompatActivity {
         adb.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                try {
+                    login("http://localhost:3000/users", id.toString(), pw.toString());
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+
+/*
+                Call<Data> response = networkService.login("yoon");
+
+                response.enqueue(new Callback<Data>() {
+                    @Override
+                    public void onResponse(Response<Data> response, Retrofit retrofit) {
+                        if (response.isSuccess()) {
+                            Data data = response.body();
+                            Log.i(TAG, "data : " + data);
+                            // 성공시 [변수 이름]에 성공한 데이터 담김
+                            //여기에다가 성공할 때 필요한 코드 작성
+                        } else {
+                            int statusCode = response.code();
+                            Log.i(TAG, "응답 코드 : " + statusCode);
+                            //서버상에 문제 있을 경우 응답 코드 뜸
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Log.i(TAG, "Server connection FaIL!!!");
+                        Log.i(TAG, "Exception : " + t.getStackTrace());
+                        Log.i(TAG, "Message : " + t.getMessage());
+                        Log.i(TAG, "message : " + t.getLocalizedMessage());
+                        new Exception(t).printStackTrace();
+                    }
+                });
+*/
                 Toast.makeText(
-                        TitleActivity.this,"ID : " +
+                        TitleActivity.this, "ID : " +
                                 id.getText().toString() + "\nPW : " +
                                 pw.getText().toString(), Toast.LENGTH_LONG).show();
 
                 // 디비 확인 후 데이터 없으면 insert
-
             }
         }).show();
     }
 
-    // GCM서비스 확인을 위한 함수
-    private boolean checkPlayServices(){
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
+    private static String login(String url, String id, String pw) throws Exception {
+
+        URL obj = new URL(url + "?id=" + id + "&pw=" + pw);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // optional default is GET
+        con.setRequestMethod("GET");
+
+        //add request header
+
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
         }
-        return true;
+        in.close();
+
+        //print result
+        System.out.println(response.toString());
+        return response.toString();
     }
 }
