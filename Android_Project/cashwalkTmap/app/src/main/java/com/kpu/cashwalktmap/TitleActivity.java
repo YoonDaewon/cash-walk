@@ -124,6 +124,8 @@ public class TitleActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                                     intent.putExtra("UserID", userId);
+                                    intent.putExtra("UserRecord", userRecord);
+                                    intent.putExtra("UserCash", userCash);
                                     startActivityForResult(intent,ACTIVITY_CODE);
 
                                     /*

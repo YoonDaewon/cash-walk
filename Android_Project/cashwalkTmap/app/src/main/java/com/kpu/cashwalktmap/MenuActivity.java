@@ -21,7 +21,6 @@ public class MenuActivity extends AppCompatActivity{
     private int soundid;
 
     private String userId;
-    private String userPw;
     private double userRecord;
     private int userCash;
 
@@ -39,6 +38,8 @@ public class MenuActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         userId = intent.getStringExtra(("UserID"));
+        userRecord = intent.getDoubleExtra("UserRecord",0);
+        userCash = intent.getIntExtra("UserCash",0);
 
         Toast.makeText(this,"환영합니다 " + userId + " 님", Toast.LENGTH_LONG).show();
     }
@@ -74,7 +75,7 @@ public class MenuActivity extends AppCompatActivity{
     }
 
     public void ChangeMPScene(View v){
-        String strMessage = "준비중입니다.";
+        String strMessage = String.format("\n ID : %s\n Record : %f\n Cash : %d",userId,userRecord,userCash);
         Common.showAlertDialog(MenuActivity.this, "My Page\n", strMessage);
     }
 
