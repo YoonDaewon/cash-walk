@@ -24,22 +24,24 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+
 
 /**
  * Created by ydwin on 2016-08-16.
  */
 public class TitleActivity extends AppCompatActivity {
 
-    //통신위한 변수 선언
-    private NetworkService networkService;
-
     private static final String TAG = "TitleActivity";
-
-    public static Activity activity;
+    //retrofit 변수 선언
+    Retrofit retrofit;
+    NetworkService networkService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +50,12 @@ public class TitleActivity extends AppCompatActivity {
 
         // 서버와 통신 위한
         // ip, port 연결, network 연결
-        ApplicationController application = ApplicationController.getInstance();
-        Log.i(TAG, "application : " + application);
-        application.buildNetworkService(3000);
-        networkService = application.getNetworkService();
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.219.183:3000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        networkService = retrofit.create(NetworkService.class);
     }
 
     @Override
@@ -61,8 +65,6 @@ public class TitleActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        // 화면 전환시 액티비티 종료
-        activity.finish();
     }
     @Override
     protected void onDestroy() {
@@ -88,8 +90,6 @@ public class TitleActivity extends AppCompatActivity {
         final EditText id = (EditText)loginLayout.findViewById(R.id.id);
         final EditText pw = (EditText)loginLayout.findViewById(R.id.pw);
 
-
-
         AlertDialog.Builder adb =  new AlertDialog.Builder(this);
 
         adb.setTitle("로그인");
@@ -97,40 +97,9 @@ public class TitleActivity extends AppCompatActivity {
         adb.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                try {
-                    login("http://localhost:3000/users", id.toString(), pw.toString());
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
 
-/*
-                Call<Data> response = networkService.login("yoon");
+                LoginCheck();
 
-                response.enqueue(new Callback<Data>() {
-                    @Override
-                    public void onResponse(Response<Data> response, Retrofit retrofit) {
-                        if (response.isSuccess()) {
-                            Data data = response.body();
-                            Log.i(TAG, "data : " + data);
-                            // 성공시 [변수 이름]에 성공한 데이터 담김
-                            //여기에다가 성공할 때 필요한 코드 작성
-                        } else {
-                            int statusCode = response.code();
-                            Log.i(TAG, "응답 코드 : " + statusCode);
-                            //서버상에 문제 있을 경우 응답 코드 뜸
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Log.i(TAG, "Server connection FaIL!!!");
-                        Log.i(TAG, "Exception : " + t.getStackTrace());
-                        Log.i(TAG, "Message : " + t.getMessage());
-                        Log.i(TAG, "message : " + t.getLocalizedMessage());
-                        new Exception(t).printStackTrace();
-                    }
-                });
-*/
                 Toast.makeText(
                         TitleActivity.this, "ID : " +
                                 id.getText().toString() + "\nPW : " +
@@ -141,33 +110,27 @@ public class TitleActivity extends AppCompatActivity {
         }).show();
     }
 
-    private static String login(String url, String id, String pw) throws Exception {
+    // 로그인 통신 하기 위한 함수
+    public void LoginCheck(){
+        Call<Data> call = networkService.getLoginId("yoon");
 
-        URL obj = new URL(url + "?id=" + id + "&pw=" + pw);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        call.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.i("Sucesss",response.body().toString());
+                } else if (response.isSuccessful()) {
+                    Log.d("Response Body isNull", response.message());
+                } else {
+                    // 404 Not Found
+                    Log.d("Response Error Body", response.errorBody().toString());
+                }
+            }
 
-        // optional default is GET
-        con.setRequestMethod("GET");
-
-        //add request header
-
-
-        int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        //print result
-        System.out.println(response.toString());
-        return response.toString();
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+                Log.i("Server connection Fail", t.getMessage());
+            }
+        });
     }
 }

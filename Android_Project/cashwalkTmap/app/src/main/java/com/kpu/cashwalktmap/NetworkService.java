@@ -2,27 +2,22 @@ package com.kpu.cashwalktmap;
 
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by ydwin on 2016-08-30.
  */
 public interface NetworkService {
-    @POST("/Data")
+    @POST("/users")
     Call<Data> post_food(@Body Data food);
 
-    @GET("/Data")
-    Call <List<Data>> getAllFood();
-
-    @GET("/Data/{id}")
-    Call <Data> getNameFood( @Path("id") String name );
-
     @GET("/users/{id}")
-    Call<Data> login(@Path("id") String userId);
+    Call<Data> getLoginId(@Path("id") String id );
 
     @GET("/")
     Call<Data> index();

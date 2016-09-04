@@ -4,10 +4,10 @@ package com.kpu.cashwalktmap;
  * Created by ydwin on 2016-08-30.
  */
 public class Data {
-    String id;
-    String pw;
-    double record;
-    int cash;
+    private String id;
+    private String pw;
+    private double record;
+    private int cash;
 
     //getter
     public String getId() {
