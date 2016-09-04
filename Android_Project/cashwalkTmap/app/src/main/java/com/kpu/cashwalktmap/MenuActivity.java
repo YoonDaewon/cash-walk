@@ -20,9 +20,12 @@ public class MenuActivity extends AppCompatActivity{
     private int streamid;
     private int soundid;
 
+    // activity간 데이터 교환을 위한 변수
     private String userId;
     private double userRecord;
     private int userCash;
+
+    final static int ACTIVITY_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class MenuActivity extends AppCompatActivity{
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
 
+        // Activity 전환 시 공유 Data 값 받아옴
         Intent intent = getIntent();
         userId = intent.getStringExtra(("UserID"));
         userRecord = intent.getDoubleExtra("UserRecord",0);
@@ -65,8 +69,18 @@ public class MenuActivity extends AppCompatActivity{
     }
 
     public void ChangePlayScene(View v) {
+
+        // Intent시 데이터 저장하여 보냄 MainActivity로 보냄.
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("UserID", userId);
+        intent.putExtra("UserRecord", userRecord);
+        intent.putExtra("UserCash", userCash);
+        startActivityForResult(intent,ACTIVITY_CODE);
+
+        /*
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        */
     }
 
     public void ChangeTAScene(View v){

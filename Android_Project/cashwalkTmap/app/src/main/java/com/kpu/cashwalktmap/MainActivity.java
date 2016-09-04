@@ -71,6 +71,11 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     boolean dragFlag = false;
     int width;
 
+    // activity간 데이터 교환을 위한 변수
+    private String userId;
+    private double userRecord;
+    private int userCash;
+
     @Override
     public void onLocationChange(Location location) {
         LogManager.printLog("onLocationChange " + location.getLatitude() +  " " + location.getLongitude() + " " + location.getSpeed() + " " + location.getAccuracy());
@@ -88,8 +93,15 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             String value1 = String.format("%.0f", kcal);
             String value2 = String.format("%.0f", g_Distance);
 
-            String strMessage = "적립되었습니다.\n소모 칼로리 : " + value1 + "\n총 이동거리 : " + value2 + "\n소요시간 : ";
+            // 적립금 추가
+            userCash += 10;
+            // 시간 저정하는 메서드 추가
+
+            String strMessage = "적립되었습니다.\n소모 칼로리 : " + value1 + "\n총 이동거리 : " + value2 + "\n소요시간 : " + "\n현재 적립금 : " + userCash;
             Common.showAlertDialog(MainActivity.this, " ", strMessage);
+
+            // 추가된 적립금을 서버와 통신하여 Update 하는 메서드 구현
+
             checkGoal = false;
         }
     }
@@ -259,6 +271,12 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         soundid = mSoundPool.load(this, R.raw.track1,1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+
+        // Activity 전환 시 공유 Data 값 받아옴
+        Intent intent = getIntent();
+        userId = intent.getStringExtra(("UserID"));
+        userRecord = intent.getDoubleExtra("UserRecord",0);
+        userCash = intent.getIntExtra("UserCash",0);
 
 
         Toast.makeText(this,"목적지를 길게 클릭하세요", Toast.LENGTH_LONG).show();

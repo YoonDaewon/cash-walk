@@ -179,7 +179,7 @@ router.route('/:userId')	// 아이디로 관리하기 위한
             console.log("Unable to connect to the mongoDB server. Error:", err);
         }else{
             console.log("Connection established to", url);
-            var collection = db.collection('person');
+            var collection = db.collection('CW_DATA');
             
             collection.remove({id:userId}, function(err){
                 if(err){
@@ -210,7 +210,7 @@ router.route('/:userId')	// 아이디로 관리하기 위한
             console.log("Unable to connect to the mongoDB server. Error:", err);
         }else{
             console.log("Connection established to", url);
-            var collection = db.collection('person');
+            var collection = db.collection('CW_DATA');
             var doc = {
             		"id":userId,
                     "pw":userPw,
@@ -218,12 +218,12 @@ router.route('/:userId')	// 아이디로 관리하기 위한
                     "cash":userCash
             };
             
-            collection.update({id:originalId},{$set:doc},function(err){
+            collection.update({id:userId},{$set:doc},function(err){
                 if(err){
                     console.log("Update fail");
                 }else{
                     console.log("Update success");
-                    res.json({id:originalId});
+                    res.json({id:userId});
                 }
             });
  
