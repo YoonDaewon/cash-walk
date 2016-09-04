@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -64,6 +65,12 @@ import com.skp.Tmap.TMapView;
 import com.skp.Tmap.TMapView.MapCaptureImageListenerCallback;
 import com.skp.Tmap.TMapView.TMapLogoPositon;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends BaseActivity implements onLocationChangedCallback
 {
     LinearLayout scroll;
@@ -73,6 +80,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     // activity간 데이터 교환을 위한 변수
     private String userId;
+    private String userPw;
     private double userRecord;
     private int userCash;
 
@@ -94,13 +102,14 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             String value2 = String.format("%.0f", g_Distance);
 
             // 적립금 추가
-            userCash += 10;
+            userCash += 1000;
             // 시간 저정하는 메서드 추가
 
             String strMessage = "적립되었습니다.\n소모 칼로리 : " + value1 + "\n총 이동거리 : " + value2 + "\n소요시간 : " + "\n현재 적립금 : " + userCash;
             Common.showAlertDialog(MainActivity.this, " ", strMessage);
 
             // 추가된 적립금을 서버와 통신하여 Update 하는 메서드 구현
+            PutData();
 
             checkGoal = false;
         }
@@ -274,7 +283,8 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         // Activity 전환 시 공유 Data 값 받아옴
         Intent intent = getIntent();
-        userId = intent.getStringExtra(("UserID"));
+        userId = intent.getStringExtra("UserID");
+        userPw = intent.getStringExtra("UserPW");
         userRecord = intent.getDoubleExtra("UserRecord",0);
         userCash = intent.getIntExtra("UserCash",0);
 
@@ -668,6 +678,37 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         String strid = String.format("%.0f",distance);
         Toast.makeText(this,"남은 거리 :" + strid + " m", Toast.LENGTH_LONG).show();
         }
+    }
+
+    // 목적지 도착시 업데이트 된 적립금을 적용하기 위한 함수
+    public void PutData(){
+
+        // ip, port 연결, network 연결
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.43.121:3000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        NetworkService networkService = retrofit.create(NetworkService.class);
+
+        Data data = new Data();
+        data.setId(userId);
+        data.setPw(userPw);
+        data.setRecord(userRecord);
+        data.setCash(userCash);
+
+        Call<Data> call = networkService.updateData(userId, data);
+
+        call.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                Log.d("Success PUT", "Good");
+            }
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+
+            }
+        });
     }
 
 }

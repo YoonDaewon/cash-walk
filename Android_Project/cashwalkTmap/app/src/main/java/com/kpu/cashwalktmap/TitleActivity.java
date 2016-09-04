@@ -61,7 +61,7 @@ public class TitleActivity extends AppCompatActivity {
         // 서버와 통신 위한
         // ip, port 연결, network 연결
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.139:3000/")
+                .baseUrl("http://192.168.43.121:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -109,44 +109,27 @@ public class TitleActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 // 통신하기 위한
-                //Call<Data> call = networkService.getLoginId(id.getText().toString());
-
-                // 업데이트 테스트
-                String uId = id.getText().toString();
-                String uPw = pw.getText().toString();
-                double uRecord = 20.1111;
-                int uCash = 999;
-
-                Data data = new Data();
-                data.setId(uId);
-                data.setPw(uPw);
-                data.setRecord(uRecord);
-                data.setCash(uCash);
-
-                Call<Data> call = networkService.updateData(id.getText().toString(), data);
+                Call<Data> call = networkService.getLoginId(id.getText().toString());
 
                 call.enqueue(new Callback<Data>() {
                     @Override
                     public void onResponse(Call<Data> call, Response<Data> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            Log.d("Update Success", "good");
+                            Log.d("Connect Success", "good");
 
-                            /*
                             //통신해서 데이터를 저장
                             userData = response.body();
                             if(userData.getId().equals(id.getText().toString()))
                             {
                                 if(userData.getPw().equals(pw.getText().toString())) {
 
-
-
                                     // 입력한 아이디와 비번이 모두 같은 경우
-                                    //saveData(); // 데이터 저장
-
+                                    saveData(); // 데이터 저장
 
                                     // Intent시 데이터 저장하여 보냄
                                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                                     intent.putExtra("UserID", userId);
+                                    intent.putExtra("UserPW", userPw);
                                     intent.putExtra("UserRecord", userRecord);
                                     intent.putExtra("UserCash", userCash);
                                     startActivityForResult(intent,ACTIVITY_CODE);
@@ -159,7 +142,6 @@ public class TitleActivity extends AppCompatActivity {
                             else{
                                 // 아이디 비번 둘 다 틀린경우
                             }
-*/
                         } else if (response.isSuccessful()) {
                             Log.d("Response Body isNull", response.message());
 
@@ -186,24 +168,4 @@ public class TitleActivity extends AppCompatActivity {
         userRecord = userData.getRecord();
         userCash = userData.getCash();
     }
-/*
-    public void PutData(){
-        Call<Data> call = networkService.updateData(userData.getId(), data);
-        call.enqueue(new Callback<Data>() {
-            @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
-                Data repo = response.body();
-                String str = String.format("id: %s\npw: %s\nrecord: %f\ncash: %d",
-                        userData.getId(),userData.getPw(),userData.getRecord(),userData.getCash());
-                //Log.d("Success PUT", str);
-            }
-
-            @Override
-            public void onFailure(Call<Data> call, Throwable t) {
-
-            }
-        });
-
-    }
-    */
 }
