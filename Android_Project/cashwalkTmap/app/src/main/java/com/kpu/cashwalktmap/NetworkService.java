@@ -19,6 +19,4 @@ public interface NetworkService {
     @GET("/users/{id}")
     Call<Data> getLoginId(@Path("id") String id );
 
-    @GET("/")
-    Call<Data> index();
 }

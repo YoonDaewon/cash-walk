@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by ydwin on 2016-08-16.
@@ -18,6 +19,11 @@ public class MenuActivity extends AppCompatActivity{
     private SoundPool mSoundPool;
     private int streamid;
     private int soundid;
+
+    private String userId;
+    private String userPw;
+    private double userRecord;
+    private int userCash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,11 @@ public class MenuActivity extends AppCompatActivity{
         soundid = mSoundPool.load(this, R.raw.track2,1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra(("UserID"));
+
+        Toast.makeText(this,"환영합니다 " + userId + " 님", Toast.LENGTH_LONG).show();
     }
 
     @Override
