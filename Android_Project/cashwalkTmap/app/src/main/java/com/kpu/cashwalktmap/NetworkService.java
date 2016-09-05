@@ -18,6 +18,7 @@ import retrofit2.http.Query;
  */
 public interface NetworkService {
 
+    // ID를 인자값으로 받아오는
     @GET("/users/{id}")
     Call<Data> getLoginId(@Path("id") String id );
 
