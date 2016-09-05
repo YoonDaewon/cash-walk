@@ -25,9 +25,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile files('libs/com.skp.Tmap_1.0.43.jar')
+<<<<<<< HEAD
 
    // compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 
+=======
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
     compile "com.google.android.gms:play-services:8.3.0"
     // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'

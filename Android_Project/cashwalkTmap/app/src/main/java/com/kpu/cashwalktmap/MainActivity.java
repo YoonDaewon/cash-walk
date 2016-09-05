@@ -106,16 +106,25 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         }
         // 현재 포인트를 가져와서 거리 측적용으로 저장
         TMapPoint m_point = mMapView.getLocationPoint();
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
         if(checkarrive)
         {
             checkArrive(m_point,g_Point);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
         // 목적지 반경 안에 들어갔나 확인하는 함수
         //checkArrive(m_point,g_Point);
         // 목적지 반경 안에 들어가면 checkGoal 변수를 true로 반환
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
         if(checkGoal){
             // 목적지에 도착하면 칼로리 및 거리를 계산
             kcal = (weight*g_Distance)/1000;
@@ -159,6 +168,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
 
     private 	int 		m_nCurrentZoomLevel = 0;
+<<<<<<< HEAD
     private 	double 		m_Latitude  = 0;
 
     private    double  	m_Longitude = 0;
@@ -166,6 +176,11 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
 
 
+=======
+    private 	double 	m_Latitude  = 0;
+    private    double  	m_Longitude = 0;
+
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
     // 목적지 좌표 저장 위한
     private double g_Latitude = 0;
     private double g_Longitude = 0;
@@ -409,7 +424,10 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
                 // 출력을 위한 변수값들 설정
                 g_Distance = Distance;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
                 // 롱 클릭 리스너에서 경로는 바로 그림
                 drawCashPath(s_Point,g_Point);
 
@@ -417,12 +435,15 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
                 //String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%f", g_Latitude, g_Longitude,Distance,realdistance);
                 String strResult = String.format("목적지 설정이 완료되었습니다.\n거리를 확인하려면 버튼을 눌러주세요");
 
-
                 // 경로 그리는 트리거 on
                 // drawPath = true;
+<<<<<<< HEAD
 
              //   String strResult = String.format("목적지\n\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
 
+=======
+               // String strResult = String.format("목적지\n\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
 
                 Common.showAlertDialog(MainActivity.this, " ",strResult);
 
@@ -478,7 +499,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         super.onDestroy();
         gps.CloseGps();
     }
-
     /**
      * onClick Event
      */
@@ -546,7 +566,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     //저장한 거리를 보여주는함수
     public  void DistanceShow() {
-        String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%f", g_Latitude, g_Longitude,g_Distance,realdistance);
+        String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%.0f m", g_Latitude, g_Longitude,g_Distance,realdistance);
 
 
         Common.showAlertDialog(MainActivity.this, " ", strResult);

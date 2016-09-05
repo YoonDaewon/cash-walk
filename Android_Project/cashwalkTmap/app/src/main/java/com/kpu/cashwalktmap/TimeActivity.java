@@ -330,10 +330,13 @@ public class TimeActivity extends BaseActivity2 implements onLocationChangedCall
         soundid = mSoundPool.load(this, R.raw.track5, 1);
         // 사운드 재생
         //streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> ccc8de40bc5d97550c8ca73b7755ec10f0d0e9d6
     }
     /**
      * setSKPMapApiKey()에 ApiKey를 입력 한다.
