@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "736548145265",
+    "project_id": "disco-catcher-128113"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736548145265:android:30dbdc6247bffd8c",
+        "android_client_info": {
+          "package_name": "com.kpu.cashwalktmap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaOWuwq21eWYmw96JybrbkKhG0QazvaDk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

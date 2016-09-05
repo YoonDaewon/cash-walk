@@ -34,6 +34,7 @@ import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -69,6 +70,12 @@ import com.skp.Tmap.TMapView;
 import com.skp.Tmap.TMapView.MapCaptureImageListenerCallback;
 import com.skp.Tmap.TMapView.TMapLogoPositon;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends BaseActivity implements onLocationChangedCallback
 {
 
@@ -85,36 +92,55 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
 
 
+    // activity간 데이터 교환을 위한 변수
+    private String userId;
+    private String userPw;
+    private double userRecord;
+    private int userCash;
+
     @Override
     public void onLocationChange(Location location) {
         LogManager.printLog("onLocationChange " + location.getLatitude() +  " " + location.getLongitude() + " " + location.getSpeed() + " " + location.getAccuracy());
         if(m_bTrackingMode) {
             mMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         }
+        // 현재 포인트를 가져와서 거리 측적용으로 저장
         TMapPoint m_point = mMapView.getLocationPoint();
+<<<<<<< HEAD
         if(checkarrive)
         {
             checkArrive(m_point,g_Point);
         }
 
+=======
+        // 목적지 반경 안에 들어갔나 확인하는 함수
+        checkArrive(m_point,g_Point);
+        // 목적지 반경 안에 들어가면 checkGoal 변수를 true로 반환
+>>>>>>> bcde76b07aa650dd534554b5cfab3df1396ce0d6
         if(checkGoal){
-            // 변수 설정
+            // 목적지에 도착하면 칼로리 및 거리를 계산
             kcal = (weight*g_Distance)/1000;
             String value1 = String.format("%.0f", kcal);
             String value2 = String.format("%.0f", g_Distance);
 
-            String strMessage = "적립되었습니다.\n소모 칼로리 : " + value1 + "\n총 이동거리 : " + value2 + "\n소요시간 : ";
+            // 적립금 추가
+            userCash += 1000;
+            // 시간 저정하는 메서드 추가
+
+            String strMessage = "적립되었습니다.\n소모 칼로리 : " + value1 + "\n총 이동거리 : " + value2 + "\n소요시간 : " + "\n현재 적립금 : " + userCash;
             Common.showAlertDialog(MainActivity.this, " ", strMessage);
+
+            // 추가된 적립금을 서버와 통신하여 Update 하는 메서드 구현
+            PutData();
+
             checkGoal = false;
         }
     }
-
 
     private TMapView		mMapView = null;
     private Context 		mContext;
 
     public static String mApiKey = "ffe26ff2-23c0-306d-8b07-337866842f14"; // 발급받은 appKey
-    public static String mBizAppID; // 발급받은 BizAppID (TMapTapi로 TMap앱 연동을 할 때 BizAppID 꼭 필요)
 
     private static final int[] mArrayMapButton = {
 
@@ -135,13 +161,17 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     private 	int 		m_nCurrentZoomLevel = 0;
     private 	double 		m_Latitude  = 0;
+<<<<<<< HEAD
     private    double  	m_Longitude = 0;
+=======
+    private     double  	m_Longitude = 0;
+
+>>>>>>> bcde76b07aa650dd534554b5cfab3df1396ce0d6
     // 목적지 좌표 저장 위한
     private double g_Latitude = 0;
     private double g_Longitude = 0;
 
     // 현재 위치와 목표 위치를 저장하기 위한point 변수
-
     private TMapPoint s_Point;
     private TMapPoint g_Point;
 
@@ -163,8 +193,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     private 	boolean 	checkGoal = false;
     private 	boolean 	m_bSightVisible = false;
     private 	boolean 	m_bTrackingMode = true;   // 추적 모드 on
-    private    boolean   drawPath = false;
-    private    boolean    m_bOverlayMode = false;
 
     ArrayList<String>      mArrayID;
 
@@ -189,7 +217,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 권한 설정
+        // 권한 설정 - 재설정 필요 GPS 자동으로 켜지게 설정해야함
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         checkLocationPermission1();
@@ -262,6 +290,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         gps = new TMapGpsManager(MainActivity.this);
 
+        // GPS 갱신 옵션 설정
         gps.setMinTime(500);
         gps.setMinDistance(5);
         gps.setProvider(gps.GPS_PROVIDER);
@@ -284,6 +313,13 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         soundid = mSoundPool.load(this, R.raw.track5, 1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+
+        // Activity 전환 시 공유 Data 값 받아옴
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("UserID");
+        userPw = intent.getStringExtra("UserPW");
+        userRecord = intent.getDoubleExtra("UserRecord",0);
+        userCash = intent.getIntExtra("UserCash",0);
 
 
 
@@ -374,6 +410,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
                 // 출력을 위한 변수값들 설정
                 g_Distance = Distance;
 
+<<<<<<< HEAD
                 // 롱 클릭 리스너에서 경로는 바로 그림
                 drawCashPath(s_Point,g_Point);
 
@@ -384,6 +421,9 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
                 // 경로 그리는 트리거 on
                 // drawPath = true;
+=======
+                String strResult = String.format("목적지\n\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
+>>>>>>> bcde76b07aa650dd534554b5cfab3df1396ce0d6
 
                 Common.showAlertDialog(MainActivity.this, " ",strResult);
 
@@ -419,7 +459,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     @Override
     protected void onResume() {
         super.onResume();
-        streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
+        //streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
 
     @Override
@@ -431,7 +471,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     protected void onStop() {
         super.onStop();
         // 화면 전환시 노래 종료
-        mSoundPool.stop(streamid);
+        //mSoundPool.stop(streamid);
     }
 
     @Override
@@ -522,7 +562,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void setZoomLevel() {
         final String[] arrString = getResources().getStringArray(R.array.a_zoomlevel);
         AlertDialog dlg = new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_launcher)
+                .setIcon(R.drawable.cashwalk_icon)
                 .setTitle("Select Zoom Level")
                 .setSingleChoiceItems(R.array.a_zoomlevel, m_nCurrentZoomLevel, new DialogInterface.OnClickListener() {
                     @Override
@@ -620,6 +660,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     }
 
     /**
+<<<<<<< HEAD
      * getIsTracking
      * 트래킹모드의 사용여부를 반환한다.
      */
@@ -638,6 +679,8 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     }
 
     /**
+=======
+>>>>>>> bcde76b07aa650dd534554b5cfab3df1396ce0d6
      * drawMapPath
      * 지도에 시작-종료 점에 대해서 경로를 표시한다.
      */
@@ -719,11 +762,42 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     {
         double distance = MapUtils.getDistance(point1,point2);
         if(distance <= radius)
-            checkGoal =  true;
-
-
+        { checkGoal =  true;}
+        else{
         String strid = String.format("%.0f",distance);
         Toast.makeText(this,"남은 거리 :" + strid + " m", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // 목적지 도착시 업데이트 된 적립금을 적용하기 위한 함수
+    public void PutData(){
+
+        // ip, port 연결, network 연결
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.43.121:3000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        NetworkService networkService = retrofit.create(NetworkService.class);
+
+        Data data = new Data();
+        data.setId(userId);
+        data.setPw(userPw);
+        data.setRecord(userRecord);
+        data.setCash(userCash);
+
+        Call<Data> call = networkService.updateData(userId, data);
+
+        call.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                Log.d("Success PUT", "Good");
+            }
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+
+            }
+        });
     }
 
 
