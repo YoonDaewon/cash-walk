@@ -3,9 +3,11 @@ package com.kpu.cashwalktmap;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimerTask;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,6 +40,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skp.Tmap.BizCategory;
@@ -68,12 +71,18 @@ import com.skp.Tmap.TMapView.TMapLogoPositon;
 
 public class MainActivity extends BaseActivity implements onLocationChangedCallback
 {
+
+
     LinearLayout scroll;
     LinearLayout scrollMenu;
     boolean dragFlag = false;
     int width;
+    boolean checkarrive = false;
 
-    long timecheck = 0;
+
+    //거리값 받아오려고 만든 전역변수
+    private  double realdistance=0;
+
 
 
     @Override
@@ -83,7 +92,11 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             mMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         }
         TMapPoint m_point = mMapView.getLocationPoint();
-        checkArrive(m_point,g_Point);
+        if(checkarrive)
+        {
+            checkArrive(m_point,g_Point);
+        }
+
         if(checkGoal){
             // 변수 설정
             kcal = (weight*g_Distance)/1000;
@@ -115,11 +128,14 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             R.id.btnSetSightVisible,
             R.id.btnSetTrackIngMode,
             R.id.btnRemoveMapPath,
+            R.id.GetDistance
     };
+
+
 
     private 	int 		m_nCurrentZoomLevel = 0;
     private 	double 		m_Latitude  = 0;
-    private     double  	m_Longitude = 0;
+    private    double  	m_Longitude = 0;
     // 목적지 좌표 저장 위한
     private double g_Latitude = 0;
     private double g_Longitude = 0;
@@ -182,32 +198,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         setContentView(R.layout.activity_main);
 
 
-        //chronometer타이머
-        final Chronometer chronometer = (Chronometer) findViewById(R.id.chronometer);
-        Button buttonStart = (Button) findViewById(R.id.buttonstart);
-        Button buttonStop = (Button) findViewById(R.id.buttonstop);
-        Button buttonReset = (Button) findViewById(R.id.buttonreset);
-        buttonStart.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                chronometer.start();
-
-            }
-        });
-
-        buttonStop.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                chronometer.stop();
-
-                //timecheck = chronometer.getBase();
-                //TimeShow();
-            }
-        });
-
-        buttonReset.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                chronometer.setBase(SystemClock.elapsedRealtime());
-            }
-        });
 
 
 
@@ -291,13 +281,14 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         //Pool 생성
         mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         // 사운드 로드
-        soundid = mSoundPool.load(this, R.raw.track1, 1);
+        soundid = mSoundPool.load(this, R.raw.track5, 1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
 
 
 
         Toast.makeText(this,"목적지를 길게 클릭하세요", Toast.LENGTH_LONG).show();
+
 
     }
     /**
@@ -371,6 +362,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
                 LogManager.printLog("MainActivity onLongPressEvent " + markerlist.size());;
                 g_Latitude = point.getLatitude();
                 g_Longitude = point.getLongitude();
+                checkarrive = true;
 
                 // 목적지 위치를 g_Point에 저장
                 g_Point = point;
@@ -382,15 +374,20 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
                 // 출력을 위한 변수값들 설정
                 g_Distance = Distance;
 
-                String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m", g_Latitude, g_Longitude,Distance);
+                // 롱 클릭 리스너에서 경로는 바로 그림
+                drawCashPath(s_Point,g_Point);
+
+
+                //String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%f", g_Latitude, g_Longitude,Distance,realdistance);
+                String strResult = String.format("목적지 설정이 완료되었습니다.\n거리를 확인하려면 버튼을 눌러주세요");
+
 
                 // 경로 그리는 트리거 on
                 // drawPath = true;
 
-                // 롱 클릭 리스너에서 경로는 바로 그림
-                drawCashPath(s_Point,g_Point);
+                Common.showAlertDialog(MainActivity.this, " ",strResult);
 
-                Common.showAlertDialog(MainActivity.this, " ", strResult);
+
             }
         });
 
@@ -457,6 +454,8 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             case R.id.btnSetSightVisible  : 	setSightVisible();		break;
             case R.id.btnSetTrackIngMode  : 	setTrackingMode();		break;
             case R.id.btnRemoveMapPath    :     removeMapPath(); 		break;
+            case R.id.GetDistance   : DistanceShow();   break;
+
         }
     }
     // 랜덤한 위치 찍어주는
@@ -500,13 +499,18 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void getZoomLevel() {
         int nCurrentZoomLevel = mMapView.getZoomLevel();
         Common.showAlertDialog(this, "", "현재 Zoom Level : " + Integer.toString(nCurrentZoomLevel));
+
+
+
     }
 
 
-    //저장한 시간을 보여주는 함수 Time
-    public  void TimeShow() {
-        String timestring = String.format("%f",timecheck);
-        Common.showAlertDialog(MainActivity.this ,"","hi" );
+    //저장한 거리를 보여주는함수
+    public  void DistanceShow() {
+        String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%f", g_Latitude, g_Longitude,g_Distance,realdistance);
+
+
+        Common.showAlertDialog(MainActivity.this, " ", strResult);
 
     }
 
@@ -594,7 +598,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
      */
     public void getIsCompass() {
         Boolean bGetIsCompass = mMapView.getIsCompass();
-        Common.showAlertDialog(this, "", "현재 나침반 모드는 : " + bGetIsCompass.toString() );
+        Common.showAlertDialog(this, "", "현재 나침반 모드는 : " + bGetIsCompass.toString());
     }
 
     /**
@@ -621,7 +625,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
      */
     public void getIsTracking() {
         Boolean bIsTracking = mMapView.getIsTracking();
-        Common.showAlertDialog(this, "", "현재 트래킹모드 사용 여부  : " + bIsTracking.toString() );
+        Common.showAlertDialog(this, "", "현재 트래킹모드 사용 여부  : " + bIsTracking.toString());
     }
 
     public void removeMarker() {
@@ -665,12 +669,15 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     public void drawCashPath(TMapPoint point1, TMapPoint point2) {
         TMapData tmapdata = new TMapData();
-
         tmapdata.findPathDataWithType(TMapPathType.PEDESTRIAN_PATH, point1, point2, new FindPathDataListenerCallback() {
             @Override
             public void onFindPathData(TMapPolyLine polyLine) {
                 polyLine.setLineColor(Color.BLUE);
                 mMapView.addTMapPath(polyLine);
+                realdistance= polyLine.getDistance();
+
+
+
             }
         });
     }
@@ -682,7 +689,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
     public void getCenterPoint() {
         TMapPoint point = mMapView.getCenterPoint();
 
-        Common.showAlertDialog(this, "", "지도의 중심 좌표는 " + point.getLatitude() + " " + point.getLongitude() );
+        Common.showAlertDialog(this, "", "지도의 중심 좌표는 " + point.getLatitude() + " " + point.getLongitude());
     }
 
     private boolean bZoomEnable = false;
@@ -718,5 +725,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         String strid = String.format("%.0f",distance);
         Toast.makeText(this,"남은 거리 :" + strid + " m", Toast.LENGTH_LONG).show();
     }
+
 
 }

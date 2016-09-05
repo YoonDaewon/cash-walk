@@ -73,41 +73,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/buttonreset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reset"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="100dp"
-                android:layout_gravity="center_vertical" />
-
-            <Button
-                android:id="@+id/buttonstart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="100dp"
-                android:layout_gravity="center_vertical" />
-
-            <Button
-                android:id="@+id/buttonstop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stop"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="100dp"
-                android:layout_gravity="center_vertical" />
-
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="200dp"
             android:id="@+id/scrollMenu"
-            android:layout_marginLeft="-30dp"
+            android:layout_marginLeft="-50dp"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -118,9 +90,9 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="20dp"
-                    android:layout_marginTop="-10dp"
-                    android:background="@drawable/leftarrow"
+                    android:layout_width="40dp"
+                    android:layout_marginTop="-20dp"
+                    android:background="@drawable/newarrow"
                     android:layout_height="80dp"
                     android:id="@+id/scrollButton"></LinearLayout>
             </LinearLayout>
@@ -143,31 +115,43 @@
 
                 <Button
                     android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:text="현재 줌 레벨"
+                    android:layout_height="70dp"
+
+                    android:background="@drawable/presentzoom"
                     android:id="@+id/btnGetZoomLevel"
                     android:layout_marginTop="30dp"/>
 
                 <Button
                     android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:text="줌 레벨 설정"
+                    android:layout_height="70dp"
+
+                    android:background="@drawable/zoomoption"
                     android:id="@+id/btnsetZoomLevel"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="22dp"/>
 
                 <Button
                     android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/setCompassMode"
+                    android:layout_height="70dp"
+
+                    android:background="@drawable/compass"
                     android:id="@+id/btnSetCompassMode"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="22dp"/>
 
                 <Button
                     android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/setsightvisible"
+                    android:layout_height="70dp"
+
+                    android:background="@drawable/vison"
                     android:id="@+id/btnSetSightVisible"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="22dp"/>
+
+                <Button
+                    android:layout_width="180dp"
+                    android:layout_height="70dp"
+
+                    android:background="@drawable/distancecheck"
+                    android:id="@+id/GetDistance"
+                    android:layout_marginTop="22dp"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -175,19 +159,6 @@
     </LinearLayout>
 
 
-
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="fill_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="#000000"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:autoText="false"
-        android:height="30dp"
-        android:textColor="#ffffff" />
 
 
 </RelativeLayout>

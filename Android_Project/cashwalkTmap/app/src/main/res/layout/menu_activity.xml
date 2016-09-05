@@ -59,4 +59,5 @@
         android:layout_alignEnd="@+id/mypage"
         android:background="@drawable/ghost"
         android:onClick="Exit" />
+
 </RelativeLayout>

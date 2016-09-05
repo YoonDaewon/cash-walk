@@ -58,8 +58,8 @@ public class MenuActivity extends AppCompatActivity{
     }
 
     public void ChangeTAScene(View v){
-        String strMessage = "준비중입니다.";
-        Common.showAlertDialog(MenuActivity.this, "Time Attack\n", strMessage);
+        Intent intent = new Intent(getApplicationContext(),TimeActivity.class);
+        startActivity(intent);
     }
 
     public void ChangeMPScene(View v){
