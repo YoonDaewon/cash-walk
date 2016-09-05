@@ -102,7 +102,7 @@ public class MenuActivity extends AppCompatActivity{
     public void ChangeMPScene(View v){
         // MyPage를 부를 때 마다 통신해서 사용자 데이터를 업데이트 함
         GetData();
-        String strMessage = String.format("\n ID : %s\n Record : %f\n Cash : %d",userId,userRecord,userCash);
+        String strMessage = String.format("\n ID : %s\n Record : %.4f m\n Cash : %d 캐쉬",userId,userRecord,userCash);
         Common.showAlertDialog(MenuActivity.this, "My Page\n", strMessage);
     }
 
@@ -124,7 +124,7 @@ public class MenuActivity extends AppCompatActivity{
 
         // ip, port 연결, network 연결
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.121:3000/")
+                .baseUrl("http://192.168.43.139:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -135,6 +135,4 @@ public class Timetest extends AppCompatActivity {
         return easy_outTime;
 
     }
-
-
 }

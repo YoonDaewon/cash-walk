@@ -61,7 +61,7 @@ public class TitleActivity extends AppCompatActivity {
         // 서버와 통신 위한
         // ip, port 연결, network 연결
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.121:3000/")
+                .baseUrl("http://192.168.43.139:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

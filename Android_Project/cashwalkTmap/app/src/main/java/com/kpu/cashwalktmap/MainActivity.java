@@ -534,7 +534,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
     //저장한 거리를 보여주는함수
     public  void DistanceShow() {
-        String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%f", g_Latitude, g_Longitude,g_Distance,realdistance);
+        String strResult = String.format("목적지\nLatitude = %f\nLongitude = %f\n직선거리 = %.0f m\n경로거리 =%.0f m", g_Latitude, g_Longitude,g_Distance,realdistance);
 
 
         Common.showAlertDialog(MainActivity.this, " ", strResult);
@@ -761,7 +761,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
 
         // ip, port 연결, network 연결
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.121:3000/")
+                .baseUrl("http://192.168.43.139:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
