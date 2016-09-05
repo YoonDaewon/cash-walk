@@ -86,7 +86,7 @@ public class MenuActivity extends AppCompatActivity{
         intent.putExtra("UserPW",userPw);
         intent.putExtra("UserRecord", userRecord);
         intent.putExtra("UserCash", userCash);
-        startActivityForResult(intent,ACTIVITY_CODE);
+        startActivityForResult(intent, ACTIVITY_CODE);
 
         /*
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -124,7 +124,7 @@ public class MenuActivity extends AppCompatActivity{
 
         // ip, port 연결, network 연결
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.121:3000/")
+                .baseUrl("http://192.168.43.139:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -139,6 +139,7 @@ public class MenuActivity extends AppCompatActivity{
 
                 saveData();
             }
+
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
 

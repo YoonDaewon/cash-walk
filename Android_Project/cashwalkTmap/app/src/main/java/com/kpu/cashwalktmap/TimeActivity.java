@@ -333,8 +333,6 @@ public class TimeActivity extends BaseActivity2 implements onLocationChangedCall
 
 
 
-        Toast.makeText(this,"목적지를 길게 클릭하세요", Toast.LENGTH_LONG).show();
-
 
     }
     /**
@@ -820,7 +818,7 @@ public class TimeActivity extends BaseActivity2 implements onLocationChangedCall
                         s_Point = mMapView.getLocationPoint();
                         drawCashPath(s_Point,T_Point);
 
-                        myBaseTime = SystemClock.elapsedRealtime()+((long)realdistance/(WORKINGSPEED*1000));
+                        myBaseTime = SystemClock.elapsedRealtime()+60000;
                         System.out.println(myBaseTime);
                         //myTimer이라는 핸들러를 빈 메세지를 보내서 호출
                         myTimer.sendEmptyMessage(0);
