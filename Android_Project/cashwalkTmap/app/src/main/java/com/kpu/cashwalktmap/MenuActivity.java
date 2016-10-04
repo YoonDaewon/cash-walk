@@ -48,6 +48,7 @@ public class MenuActivity extends AppCompatActivity{
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
 
+        /*
         // Activity 전환 시 공유 Data 값 받아옴
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
@@ -56,6 +57,7 @@ public class MenuActivity extends AppCompatActivity{
         userCash = intent.getIntExtra("UserCash",0);
 
         Toast.makeText(this,"환영합니다 " + userId + " 님", Toast.LENGTH_LONG).show();
+        */
     }
 
     @Override
@@ -80,6 +82,7 @@ public class MenuActivity extends AppCompatActivity{
 
     public void ChangePlayScene(View v) {
 
+        /*
         // Intent시 데이터 저장하여 보냄 MainActivity로 보냄.
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("UserID", userId);
@@ -87,11 +90,10 @@ public class MenuActivity extends AppCompatActivity{
         intent.putExtra("UserRecord", userRecord);
         intent.putExtra("UserCash", userCash);
         startActivityForResult(intent,ACTIVITY_CODE);
-
-        /*
+*/
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
-        */
+
     }
 
     public void ChangeTAScene(View v){
@@ -101,7 +103,7 @@ public class MenuActivity extends AppCompatActivity{
 
     public void ChangeMPScene(View v){
         // MyPage를 부를 때 마다 통신해서 사용자 데이터를 업데이트 함
-        GetData();
+        //GetData();
         String strMessage = String.format("\n ID : %s\n Record : %.4f m\n Cash : %d 캐쉬",userId,userRecord,userCash);
         Common.showAlertDialog(MenuActivity.this, "My Page\n", strMessage);
     }
@@ -120,6 +122,7 @@ public class MenuActivity extends AppCompatActivity{
     }
 
     // MyPage 업데이트를 위한 함수. 서버에서 직접 데이터를 가져옴
+    /*
     public void GetData(){
 
         // ip, port 연결, network 연결
@@ -153,4 +156,5 @@ public class MenuActivity extends AppCompatActivity{
         userRecord = userData.getRecord();
         userCash = userData.getCash();
     }
+    */
 }

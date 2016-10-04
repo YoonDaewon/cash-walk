@@ -58,6 +58,7 @@ public class TitleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title_activity);
 
+        /*
         // 서버와 통신 위한
         // ip, port 연결, network 연결
         retrofit = new Retrofit.Builder()
@@ -66,7 +67,7 @@ public class TitleActivity extends AppCompatActivity {
                 .build();
 
         networkService = retrofit.create(NetworkService.class);
-
+*/
     }
 
     @Override
@@ -105,9 +106,11 @@ public class TitleActivity extends AppCompatActivity {
         adb.setTitle("로그인");
         adb.setView(loginLayout);
         adb.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                /*
                 // 통신하기 위한
                 Call<Data> call = networkService.getLoginId(id.getText().toString());
 
@@ -158,8 +161,13 @@ public class TitleActivity extends AppCompatActivity {
                 });
 
                 // 디비 확인 후 데이터 없으면 insert
+                */
+
             }
         }).show();
+        // 액티비티 전환
+        Intent intent = new Intent(this,MenuActivity.class);
+        startActivity(intent);
     }
     // 로그인 정보가 일치하면 데이터를 저장함.
     private void saveData(){

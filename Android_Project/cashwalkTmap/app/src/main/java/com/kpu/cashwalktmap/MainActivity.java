@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             Common.showAlertDialog(MainActivity.this, " ", strMessage);
 
             // 추가된 적립금을 서버와 통신하여 Update 하는 메서드 구현
-            PutData();
+            //PutData();
 
             checkGoal = false;
         }
@@ -646,8 +646,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         mMapView.setTrackingMode(m_bTrackingMode);
     }
 
-    /**
-<<<<<<< HEAD
+    /*
      * getIsTracking
      * 트래킹모드의 사용여부를 반환한다.
      */
@@ -665,9 +664,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         mArrayMarkerID.remove(mArrayMarkerID.size() - 1);
     }
 
-    /**
-=======
->>>>>>> bcde76b07aa650dd534554b5cfab3df1396ce0d6
+    /*
      * drawMapPath
      * 지도에 시작-종료 점에 대해서 경로를 표시한다.
      */
@@ -756,6 +753,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         }
     }
 
+    /*
     // 목적지 도착시 업데이트 된 적립금을 적용하기 위한 함수
     public void PutData(){
 
@@ -786,6 +784,6 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             }
         });
     }
-
+    */
 
 }
