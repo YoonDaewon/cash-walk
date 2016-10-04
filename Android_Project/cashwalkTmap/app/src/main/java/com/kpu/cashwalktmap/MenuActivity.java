@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ydwin on 2016-08-16.
  */
 
-public class MenuActivity extends AppCompatActivity{
+public class MenuActivity extends AppCompatActivity {
 
     private SoundPool mSoundPool;
     private int streamid;
@@ -42,9 +42,9 @@ public class MenuActivity extends AppCompatActivity{
         setContentView(R.layout.menu_activity);
 
         //Pool 생성
-        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         // 사운드 로드
-        soundid = mSoundPool.load(this, R.raw.track2,1);
+        soundid = mSoundPool.load(this, R.raw.track2, 1);
         // 사운드 재생
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
 
@@ -65,12 +65,14 @@ public class MenuActivity extends AppCompatActivity{
         super.onResume();
         streamid = mSoundPool.play(soundid, 1.0f, 1.0f, 1, -1, 1.0f);
     }
+
     @Override
     protected void onStop() {
         super.onStop();
         // 화면 전환시 노래 종료
         mSoundPool.stop(streamid);
     }
+
     @Override
     protected void onDestroy() {
 
@@ -89,8 +91,12 @@ public class MenuActivity extends AppCompatActivity{
         intent.putExtra("UserPW",userPw);
         intent.putExtra("UserRecord", userRecord);
         intent.putExtra("UserCash", userCash);
+<<<<<<< HEAD
         startActivityForResult(intent,ACTIVITY_CODE);
 */
+
+        /*
+>>>>>>> 7d056872962cef685305b6768d8ac365e85591a0
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
 
@@ -142,6 +148,7 @@ public class MenuActivity extends AppCompatActivity{
 
                 saveData();
             }
+
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
 
@@ -157,4 +164,5 @@ public class MenuActivity extends AppCompatActivity{
         userCash = userData.getCash();
     }
     */
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_pVRmoW6AEeaJUJ8nCicy-A" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_pVRmom6AEeaJUJ8nCicy-A" bindingContexts="_pVRmpG6AEeaJUJ8nCicy-A">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; tooltip=&quot;cashwalk_server/app.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/app.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.chromium.debug.ui.editors.JsEditor&quot; name=&quot;C__test_cashwalk_server_cashwalk_server_app.js.chromium&quot; tooltip=&quot;STANDALONE_V8/C__test_cashwalk_server_cashwalk_server_app.js.chromium&quot;>&#xD;&#xA;&lt;persistable path=&quot;/STANDALONE_V8/C__test_cashwalk_server_cashwalk_server_app.js.chromium&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;people.js&quot; tooltip=&quot;cashwalk_server/routes/people.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/routes/people.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor.json&quot; name=&quot;package.json&quot; tooltip=&quot;cashwalk_server/package.json&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/package.json&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor.www&quot; name=&quot;www&quot; tooltip=&quot;cashwalk_server/bin/www&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/bin/www&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;people&quot; tooltip=&quot;cashwalk_server/routes/people&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/routes/people&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;www.js&quot; tooltip=&quot;cashwalk_server/bin/www.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/bin/www.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; tooltip=&quot;dbserver/app.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/dbserver/app.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.buildship.ui.gradlebuildscripteditor&quot; name=&quot;build.gradle&quot; tooltip=&quot;dbtest/app/build.gradle&quot;>&#xD;&#xA;&lt;persistable path=&quot;/dbtest/app/build.gradle&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; tooltip=&quot;cashwalk_server/app.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/app.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; tooltip=&quot;C:\test\dbserver\app.js&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/test/dbserver/app.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.chromium.debug.ui.editors.JsEditor&quot; name=&quot;C__test_cashwalk_server_cashwalk_server_app.js.chromium&quot; tooltip=&quot;STANDALONE_V8/C__test_cashwalk_server_cashwalk_server_app.js.chromium&quot;>&#xD;&#xA;&lt;persistable path=&quot;/STANDALONE_V8/C__test_cashwalk_server_cashwalk_server_app.js.chromium&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;people.js&quot; tooltip=&quot;cashwalk_server/routes/people.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/routes/people.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor.json&quot; name=&quot;package.json&quot; tooltip=&quot;cashwalk_server/package.json&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/package.json&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor.www&quot; name=&quot;www&quot; tooltip=&quot;cashwalk_server/bin/www&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/bin/www&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;people&quot; tooltip=&quot;cashwalk_server/routes/people&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/routes/people&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;www.js&quot; tooltip=&quot;cashwalk_server/bin/www.js&quot;>&#xD;&#xA;&lt;persistable path=&quot;/cashwalk_server/bin/www.js&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_pVRmom6AEeaJUJ8nCicy-A" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_poKGYG6AEeaJUJ8nCicy-A" label="%trimmedwindow.label.eclipseSDK" x="857" y="86" width="960" height="1032">
@@ -11,6 +11,7 @@
     <persistedState key="aggregateWorkingSetId" value="Aggregate for window 1472540952561"/>
     <persistedState key="show_in_time" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;show_in_time/>"/>
     <tags>topLevel</tags>
+    <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_poKGYG6AEeaJUJ8nCicy-A" selectedElement="_poKGYW6AEeaJUJ8nCicy-A" horizontal="true">
       <children xsi:type="advanced:PerspectiveStack" xmi:id="_poKGYW6AEeaJUJ8nCicy-A" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_WPWGgG6fEeawSLuWOgmTZg">
         <children xsi:type="advanced:Perspective" xmi:id="_pxtD8G6AEeaJUJ8nCicy-A" elementId="org.eclipse.jdt.ui.JavaPerspective" selectedElement="_pxtD8W6AEeaJUJ8nCicy-A" label="Java" iconURI="platform:/plugin/org.eclipse.jdt.ui/$nl$/icons/full/eview16/jperspective.png">
@@ -242,8 +243,8 @@
               <children xsi:type="advanced:Placeholder" xmi:id="_WPWGh26fEeawSLuWOgmTZg" elementId="org.eclipse.jdt.ui.PackageExplorer" toBeRendered="false" ref="_pxg2sG6AEeaJUJ8nCicy-A"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_WPWGiG6fEeawSLuWOgmTZg" elementId="org.eclipse.jdt.ui.TypeHierarchy" toBeRendered="false" ref="_pxir4G6AEeaJUJ8nCicy-A"/>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_WPWGgW6fEeawSLuWOgmTZg" containerData="8044" selectedElement="_WPWGgm6fEeawSLuWOgmTZg">
-              <children xsi:type="basic:PartSashContainer" xmi:id="_WPWGgm6fEeawSLuWOgmTZg" containerData="7500" selectedElement="_WPWGjm6fEeawSLuWOgmTZg">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_WPWGgW6fEeawSLuWOgmTZg" containerData="8044" selectedElement="_WPWGk26fEeawSLuWOgmTZg">
+              <children xsi:type="basic:PartSashContainer" xmi:id="_WPWGgm6fEeawSLuWOgmTZg" containerData="4802" selectedElement="_WPWGjm6fEeawSLuWOgmTZg">
                 <children xsi:type="basic:PartStack" xmi:id="_WPWGiW6fEeawSLuWOgmTZg" elementId="org.eclipse.debug.internal.ui.ToolsFolderView" toBeRendered="false" containerData="4500">
                   <children xsi:type="advanced:Placeholder" xmi:id="_WPWGim6fEeawSLuWOgmTZg" elementId="org.eclipse.debug.ui.VariableView" toBeRendered="false" ref="_WPR1EG6fEeawSLuWOgmTZg"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_WPWGi26fEeawSLuWOgmTZg" elementId="org.eclipse.debug.ui.BreakpointView" toBeRendered="false" ref="_WPScIG6fEeawSLuWOgmTZg"/>
@@ -260,7 +261,7 @@
                   </children>
                 </children>
               </children>
-              <children xsi:type="basic:PartStack" xmi:id="_WPWGk26fEeawSLuWOgmTZg" elementId="org.eclipse.debug.internal.ui.ConsoleFolderView" containerData="2500" selectedElement="_WPWGlG6fEeawSLuWOgmTZg">
+              <children xsi:type="basic:PartStack" xmi:id="_WPWGk26fEeawSLuWOgmTZg" elementId="org.eclipse.debug.internal.ui.ConsoleFolderView" containerData="5198" selectedElement="_WPWGlG6fEeawSLuWOgmTZg">
                 <tags>org.eclipse.e4.secondaryDataStack</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_WPWGlG6fEeawSLuWOgmTZg" elementId="org.eclipse.ui.console.ConsoleView" ref="_pxkhEW6AEeaJUJ8nCicy-A"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_WPWGlW6fEeawSLuWOgmTZg" elementId="org.eclipse.ui.views.TaskList" ref="_mz7ucW6EEea-KeUSMMLftQ"/>
@@ -305,17 +306,15 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_pxXswG6AEeaJUJ8nCicy-A" elementId="org.eclipse.ui.editorss" selectedElement="_pxXswW6AEeaJUJ8nCicy-A">
-      <children xsi:type="basic:PartStack" xmi:id="_pxXswW6AEeaJUJ8nCicy-A" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_kxdD4G6FEea-KeUSMMLftQ">
+      <children xsi:type="basic:PartStack" xmi:id="_pxXswW6AEeaJUJ8nCicy-A" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_SMfmcHMQEeaLo4rkrJYtVg">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_kxdD4G6FEea-KeUSMMLftQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="app.js" iconURI="platform:/plugin/org.nodeclipse.ui/icons/node_top_right_corner_file.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; partName=&quot;app.js&quot; title=&quot;app.js&quot; tooltip=&quot;cashwalk_server/app.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cashwalk_server/app.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1137&quot; selectionTopPixel=&quot;431&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; partName=&quot;app.js&quot; title=&quot;app.js&quot; tooltip=&quot;cashwalk_server/app.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cashwalk_server/app.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;636&quot; selectionTopPixel=&quot;41&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.nodeclipse.ui.editors.NodeEditor</tags>
           <tags>removeOnHide</tags>
-          <tags>active</tags>
-          <tags>activeOnClose</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_pPUWUG6FEea-KeUSMMLftQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="package.json" iconURI="platform:/plugin/org.nodeclipse.ui/icons/node_blue.png" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.nodeclipse.ui.editors.NodeEditor.json&quot; name=&quot;package.json&quot; partName=&quot;package.json&quot; title=&quot;package.json&quot; tooltip=&quot;cashwalk_server/package.json&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cashwalk_server/package.json&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;226&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
@@ -334,6 +333,26 @@
           <tags>Editor</tags>
           <tags>org.nodeclipse.ui.editors.NodeEditor</tags>
           <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_F7OpIHMQEeaLo4rkrJYtVg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="app.js" iconURI="platform:/plugin/org.nodeclipse.ui/icons/node_top_right_corner_file.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; partName=&quot;app.js&quot; title=&quot;app.js&quot; tooltip=&quot;C:\test\dbserver\app.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/C:/test/dbserver/app.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.nodeclipse.ui.editors.NodeEditor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_LhK98HMQEeaLo4rkrJYtVg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="build.gradle" iconURI="platform:/plugin/org.eclipse.buildship.ui/icons/full/obj16/gradle_logo.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.buildship.ui.gradlebuildscripteditor&quot; name=&quot;build.gradle&quot; partName=&quot;build.gradle&quot; title=&quot;build.gradle&quot; tooltip=&quot;dbtest/app/build.gradle&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/dbtest/app/build.gradle&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;299&quot; selectionTopPixel=&quot;161&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.eclipse.buildship.ui.gradlebuildscripteditor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_SMfmcHMQEeaLo4rkrJYtVg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="app.js" iconURI="platform:/plugin/org.nodeclipse.ui/icons/node_top_right_corner_file.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.nodeclipse.ui.editors.NodeEditor&quot; name=&quot;app.js&quot; partName=&quot;app.js&quot; title=&quot;app.js&quot; tooltip=&quot;dbserver/app.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/dbserver/app.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.nodeclipse.ui.editors.NodeEditor</tags>
+          <tags>removeOnHide</tags>
+          <tags>active</tags>
+          <tags>activeOnClose</tags>
         </children>
       </children>
     </sharedElements>
@@ -583,7 +602,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_pp4ksG6AEeaJUJ8nCicy-A" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_mKcJ4G6iEeatUNSEWn2yew" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_pVuUIW6AEeaJUJ8nCicy-A"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_1DTCsHMPEeaLo4rkrJYtVg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_pVuUIW6AEeaJUJ8nCicy-A"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_pp4ksW6AEeaJUJ8nCicy-A" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -616,7 +635,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_pp5LwG6AEeaJUJ8nCicy-A" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_mKf0QG6iEeatUNSEWn2yew" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_pVuTmG6AEeaJUJ8nCicy-A"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_1DWtEHMPEeaLo4rkrJYtVg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_pVuTmG6AEeaJUJ8nCicy-A"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_pp5LwW6AEeaJUJ8nCicy-A" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -2804,7 +2823,7 @@
   <addons xmi:id="_pVRms26AEeaJUJ8nCicy-A" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_pVRmtG6AEeaJUJ8nCicy-A" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_pVRmtW6AEeaJUJ8nCicy-A" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_l3pJsG6iEeatUNSEWn2yew" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_pVkhkG6AEeaJUJ8nCicy-A" elementId="org.eclipse.team.ui.category.team" name="Team" description="Actions that apply when working with a Team"/>
   <categories xmi:id="_pVkhkW6AEeaJUJ8nCicy-A" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>

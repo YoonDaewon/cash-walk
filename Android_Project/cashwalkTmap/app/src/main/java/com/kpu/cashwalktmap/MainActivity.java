@@ -106,13 +106,16 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         }
         // 현재 포인트를 가져와서 거리 측적용으로 저장
         TMapPoint m_point = mMapView.getLocationPoint();
+
         if(checkarrive)
         {
             checkArrive(m_point,g_Point);
         }
+
         // 목적지 반경 안에 들어갔나 확인하는 함수
-        checkArrive(m_point,g_Point);
+        //checkArrive(m_point,g_Point);
         // 목적지 반경 안에 들어가면 checkGoal 변수를 true로 반환
+
         if(checkGoal){
             // 목적지에 도착하면 칼로리 및 거리를 계산
             kcal = (weight*g_Distance)/1000;
@@ -310,8 +313,8 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
         Intent intent = getIntent();
         userId = intent.getStringExtra("UserID");
         userPw = intent.getStringExtra("UserPW");
-        userRecord = intent.getDoubleExtra("UserRecord",0);
-        userCash = intent.getIntExtra("UserCash",0);
+        userRecord = intent.getDoubleExtra("UserRecord", 0);
+        userCash = intent.getIntExtra("UserCash", 0);
 
 
 
@@ -778,6 +781,7 @@ public class MainActivity extends BaseActivity implements onLocationChangedCallb
             public void onResponse(Call<Data> call, Response<Data> response) {
                 Log.d("Success PUT", "Good");
             }
+
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
 
